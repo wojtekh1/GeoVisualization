@@ -1,0 +1,27 @@
+html,
+body {
+    height: 100%;
+}
+
+.center-form {
+    height: 90%;
+    display: flex;
+    align-items: center;
+}
+
+
+.border-signin {
+    border: 3px solid #acacac !important
+}
+
+.bg-brand {
+    background-color: #033e7d; !important
+}
+
+.rounded-signin {
+    border-radius: 2rem !important
+}
+.img {
+    display: inline-block;
+    float: left;
+}

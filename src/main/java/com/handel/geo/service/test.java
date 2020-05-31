@@ -1,6 +1,6 @@
 package com.handel.geo.service;
 
-import com.handel.geo.repository.PostRepository;
+import com.handel.geo.repository.LocatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +20,7 @@ public class test implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private PostRepository postRepository;
+    private LocatorRepository locatorRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 

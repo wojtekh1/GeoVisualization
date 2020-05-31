@@ -1,8 +1,8 @@
 package com.handel.geo.controller;
 
 import com.handel.geo.model.Users;
-import com.handel.geo.model.Post;
-import com.handel.geo.service.PostService;
+import com.handel.geo.model.Locator;
+import com.handel.geo.service.LocatorService;
 import com.handel.geo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,38 +23,38 @@ public class HomeController {
     @Autowired
     UserService userService;
     @Autowired
-    PostService postService;
+    LocatorService locatorService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home() {
-        List<Post> allPost = postService.getAllPosts();
+        List<Locator> allLocator = locatorService.getAllLocators();
         ModelAndView modelAndView = new ModelAndView();
         Users user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        modelAndView.addObject("allPosts", allPost);
+        modelAndView.addObject("allLocators", allLocator);
         modelAndView.addObject("user", user);
-        Post post = new Post();
+        Locator locator = new Locator();
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
         if(!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
-            post.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+            locator.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         }
-        modelAndView.addObject("post", post);
-        System.out.println(post.getUser());
+        modelAndView.addObject("locator", locator);
+        System.out.println(locator.getUser());
         modelAndView.setViewName("home");
         return modelAndView;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView createPost(@Valid Post post, BindingResult bindingResult, ModelAndView modelAndView) {
-        System.out.println("POST: --> " + post);
+    public ModelAndView createLocator(@Valid Locator locator, BindingResult bindingResult, ModelAndView modelAndView) {
+        System.out.println("LOKALIZATOR: --> " + locator);
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
             modelAndView.setViewName("home");
         } else {
-            if (post != null) {
-                post.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
-                post.setDate(LocalDateTime.now());
-                postService.savePost(post);
+            if (locator != null) {
+                locator.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+                locator.setDate(LocalDateTime.now());
+                locatorService.saveLocator(locator);
                 modelAndView.setViewName("redirect:/");
             } else {
                 modelAndView.setViewName("access-denied.html");
@@ -64,27 +64,27 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deletePost(@PathVariable("id") Integer id) {
+    public ModelAndView deleteLocator(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView();
-        postService.deletePost(id);
+        locatorService.deleteLocator(id);
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editPost(@PathVariable("id") Integer id) {
+    public ModelAndView editLocator(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView();
-        Post post = postService.getPost(id);
-        System.out.println("POST ID z metody GET-------" + post.getPostId());
-        modelAndView.addObject("post", post);
-        modelAndView.setViewName("editPostForm");
+        Locator locator = locatorService.getLocator(id);
+        System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());
+        modelAndView.addObject("locator", locator);
+        modelAndView.setViewName("editLocatorForm");
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editPost(@Valid Post post, BindingResult bindingResult, ModelAndView modelAndView) {
-        System.out.println("POST ID z met POST"+post.getPostId());
-        postService.updatePost(post);
+    public ModelAndView editLocator(@Valid Locator locator, BindingResult bindingResult, ModelAndView modelAndView) {
+        System.out.println("LOKALIZATOR ID z met POST"+locator.getId());
+        locatorService.updateLocator(locator);
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;

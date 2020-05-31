@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 //@Table(name = "post")
-public class Post {
+public class Locator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer postId;
+    private Integer id;
 
-    @NotEmpty(message = "Wypełnij treść postu")
-    private String postContent;
+    @NotEmpty(message = "Wypełnij opis dodatkowy")
+    private String description;
 
     private LocalDateTime date;
 
@@ -29,8 +29,8 @@ public class Post {
     @JoinColumn(name = "User")
     private Users user;
 
-    @NotEmpty(message = "Wypełnij tytuł postu")
-    private String topic;
+    @NotEmpty(message = "Wypełnij nazwę nadajnika")
+    private String name;
 
     @Nullable
     private String imageLink;

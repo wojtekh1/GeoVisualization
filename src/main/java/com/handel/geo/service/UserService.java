@@ -31,6 +31,20 @@ public class UserService {
         return usersRepository.findByEmail(email);
     }
 
+    public Integer findUserIdByEmail(String email) {
+        Users user = new Users();
+        user=usersRepository.findByEmail(email);
+        Integer id;
+        if (user == null)
+        {
+            id = 0;
+        }
+        else {
+            id = user.getUserId();
+        }
+        return id;
+    }
+
     public List<Role> findAllTypes() {
         return roleRepository.findAllRoles();
     }

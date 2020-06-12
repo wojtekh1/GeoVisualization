@@ -27,19 +27,23 @@ public class LocatorsController {
 
     @RequestMapping(value = "/locators", method = RequestMethod.GET)
     public ModelAndView locators() {
-        List<Locator> allLocator = locatorService.getAllLocators();
-        ModelAndView modelAndView = new ModelAndView();
-        Users user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        modelAndView.addObject("allLocators", allLocator);
-        modelAndView.addObject("user", user);
         Locator locator = new Locator();
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
         if(!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
             locator.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         }
-        modelAndView.addObject("locator", locator);
         System.out.println(locator.getUser());
+//        List<Locator> allLocator = locatorService.getAllLocators();
+        List<Locator> allUserLocator = locatorService.getAllUserLocators(userService.findUserIdByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+        ModelAndView modelAndView = new ModelAndView();
+        Users user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        modelAndView.addObject("allUserLocators", allUserLocator);
+        modelAndView.addObject("user", user);
+
+
+        modelAndView.addObject("locator", locator);
+
         modelAndView.setViewName("locators");
         return modelAndView;
     }

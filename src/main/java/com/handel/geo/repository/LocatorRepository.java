@@ -17,6 +17,10 @@ public interface LocatorRepository extends CrudRepository<Locator, Integer>
     @Query(value = "select * from LOCATOR order by ID desc", nativeQuery = true)
     List<Locator> getAllLocators();
 
+//    @Query(value = "select * from LOCATOR l inner join Users u where u.USER_ID=:userId order by ID desc", nativeQuery = true)
+    @Query(value = "select * from LOCATOR l where USER=:userId order by ID desc", nativeQuery = true)
+    List<Locator> getAllUserLocators(@Param("userId") Integer userId);
+
     @Transactional
     @Modifying
     @Query("delete from Locator l where l.id=:id")

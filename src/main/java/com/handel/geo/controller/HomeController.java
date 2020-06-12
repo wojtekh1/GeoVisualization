@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,19 +28,27 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home() {
-        List<Locator> allLocator = locatorService.getAllLocators();
-        ModelAndView modelAndView = new ModelAndView();
-        Users user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        modelAndView.addObject("allLocators", allLocator);
-        modelAndView.addObject("user", user);
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         Locator locator = new Locator();
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-        if(!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
-            locator.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+        System.out.println(authName.equals("anonymousUser"));
+        System.out.println(authName);
+        System.out.println(locator.getUser());
+//        if(!authName.equals("anonymousUser")) {
+            List<Locator> allUserLocators;
+            allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
+//        }else
+//        {
+//            List<Locator> allUserLocators=new ArrayList<>
+//        }
+        ModelAndView modelAndView = new ModelAndView();
+        Users user = userService.findUserByEmail(authName);
+        modelAndView.addObject("allUserLocators", allUserLocators);
+        modelAndView.addObject("user", user);
+        if(!authName.equals("anonymousUser")) {
+            locator.setUser(userService.findUserByEmail(authName));
         }
         modelAndView.addObject("locator", locator);
-        System.out.println(locator.getUser());
+
         modelAndView.setViewName("home");
         return modelAndView;
     }

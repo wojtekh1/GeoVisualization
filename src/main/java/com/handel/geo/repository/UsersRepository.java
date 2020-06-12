@@ -12,7 +12,7 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository<Users, Integer> {
     Users findByEmail(String email);
 
-    @Query(value = "select * from ForumUsers", nativeQuery = true)
+    @Query(value = "select * from Users", nativeQuery = true)
     List<Users> findAllUsers();
 
     List<Users> findUserByRoles(Role role);

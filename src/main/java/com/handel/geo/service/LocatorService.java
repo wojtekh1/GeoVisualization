@@ -28,6 +28,9 @@ public class LocatorService {
     public List<Locator> getAllLocators() {
         return new ArrayList<>(locatorRepository.getAllLocators());
     }
+    public List<Locator> getAllUserLocators(Integer userId) {
+        return new ArrayList<>(locatorRepository.getAllUserLocators(userId));
+    }
 
     public void deleteLocator(Integer id) {
         System.out.println("ID lokalizatora "+id);

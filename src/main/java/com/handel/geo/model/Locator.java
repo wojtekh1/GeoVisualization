@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-//@Table(name = "post")
+//@Table(name = "locator")
 public class Locator {
 
     @Id
@@ -23,7 +23,7 @@ public class Locator {
     @NotEmpty(message = "Wypełnij opis dodatkowy")
     private String description;
 
-    private LocalDateTime date;
+    private LocalDateTime modyficationDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "User")

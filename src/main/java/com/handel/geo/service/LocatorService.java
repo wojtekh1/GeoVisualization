@@ -41,7 +41,7 @@ public class LocatorService {
     public void updateLocator(Locator locator) {
         Locator updatedLocator = locator;
         updatedLocator.setUser(userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
-        updatedLocator.setDate(LocalDateTime.now());
+        updatedLocator.setModyficationDate(LocalDateTime.now());
         locatorRepository.deleteLocatorById(locator.getId());
         locatorRepository.save(updatedLocator);
     }

@@ -35,10 +35,42 @@
             <div class="col-md-2 col-sm-12">
             </div>
             <div class="col-md-8 col-sm-12">
-                <h1>Witam</h1>
+                <h2>Lokalizatory:</h2>
+                <div class="m-2 p-2 border rounded" th:if="${#request.getUserPrincipal() != null}">
+                    <form class="form-horizontal" th:action="@{/locators}" th:object="${locator}" method="POST">
+                        <input type="hidden" th:field="*{user}" />
+                        <input type="text" class="form-control m-1" th:field="*{name}" placeholder="Nazwa lokalizatora" />
+                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message text-danger"></label>
+                        <input type="text" class="form-control m-1" th:field="*{description}" placeholder="Opis dodatkowy lokalizatora" />
+                        <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="validation-message text-danger"></label>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-primary ml-auto mr-auto pl-5 pr-5" type="submit">Dodaj lokalizator</button>
+                        </div>
 
+                    </form>
+                </div>
 
+                <div class=" border border-secondary rounded m-2" th:each="locator : ${allLocators}">
+                    <h2>
+                        <div class="ml-4" th:text="${locator.name}"></div>
+                    </h2>
+                    <h6>
+                        <div class="ml-5" th:text="${locator.description}"></div>
+                    </h6>
+                    <div class="d-flex">
+                        <div class="mr-auto ml-2" th:text="${locator.user.getEmail()}"></div>
+                        <div class="ml-auto mr-2" th:text="${#temporals.format(locator.modyficationDate, 'dd-MM-yyyy HH:mm')}"></div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="mr-auto ml-2" th:if="${#request.getUserPrincipal() != null && #request.getUserPrincipal().getName().equals(locator.user.getEmail())}">
 
+                            <a th:href="${'/edit/'+locator.id}" class="btn btn-outline-info ml-auto m-2">Edytuj nadajnik</a>
+                        </div>
+                        <div class="ml-auto" th:if="${#request.getUserPrincipal() != null && #request.getUserPrincipal().toString().contains('ADMIN')}">
+                            <a th:href="${'/delete/'+locator.id}" class="btn btn-outline-danger ml-auto m-2">Usuń nadajnik</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-2 col-sm-12">
             </div>

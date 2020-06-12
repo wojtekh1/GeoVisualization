@@ -68,7 +68,7 @@ public class LocatorsController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteLocator(@PathVariable("id") Integer id) {
+    public ModelAndView deleteLocator(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView();
         locatorService.deleteLocator(id);
         modelAndView.setViewName("redirect:/locators");
@@ -76,7 +76,7 @@ public class LocatorsController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editLocator(@PathVariable("id") Integer id) {
+    public ModelAndView editLocator(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
         System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());

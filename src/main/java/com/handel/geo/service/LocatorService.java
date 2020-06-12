@@ -32,12 +32,12 @@ public class LocatorService {
         return new ArrayList<>(locatorRepository.getAllUserLocators(userId));
     }
 
-    public void deleteLocator(Integer id) {
+    public void deleteLocator(String id) {
         System.out.println("ID lokalizatora "+id);
         locatorRepository.deleteLocatorById(id);
     }
 
-    public Locator getLocator(Integer id) {
+    public Locator getLocator(String id) {
         return locatorRepository.getLocatorById(id);
     }
 

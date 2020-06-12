@@ -1,11 +1,15 @@
 package com.handel.geo.model;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.UUIDGenerator;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @ToString
 @Data
@@ -17,8 +21,9 @@ import java.time.LocalDateTime;
 public class Locator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid",strategy = "uuid2")
+    private String id;
 
     @NotEmpty(message = "Wypełnij opis dodatkowy")
     private String description;

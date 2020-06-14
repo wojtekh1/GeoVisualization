@@ -21,10 +21,14 @@ public class Locations {
 
     private float Fi;
     private float Lambda;
+    @Nullable
     private float H;
 
+    @Nullable
     private float dFi;
+    @Nullable
     private float dLambda;
+    @Nullable
     private float dH;
 
     private LocalDateTime date_time;

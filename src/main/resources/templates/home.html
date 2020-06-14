@@ -32,10 +32,10 @@
             crossorigin=""></script>
 
     <!--    transformation   -->
-    <script src="../../static/js/proj4-compressed.js.pobrane" th:src="@{/js/proj4-compressed.js.pobrane}"></script>
-    <script src="../../static/js/proj4leaflet.js.pobrane" th:src="@{/js/proj4leaflet.js.pobrane}"></script>
-    <script src="../../static/js/TileLayer.ProjWMTS.js.pobrane" th:src="@{/js/TileLayer.ProjWMTS.js.pobrane}"></script>
-    <script src="../../static/js/esri-leaflet@2.1.1" th:src="@{/js/esri-leaflet@2.1.1}"></script>
+    <script src="../../static/js/proj4-compressed.js.pobrane" th:src="@{/js/proj4-compressed.js}"></script>
+    <script src="../../static/js/proj4leaflet.js.pobrane" th:src="@{/js/proj4leaflet.js}"></script>
+    <script src="../../static/js/TileLayer.ProjWMTS.js.pobrane" th:src="@{/js/TileLayer.ProjWMTS.js}"></script>
+    <script src="../../static/js/esri-leaflet@2.1.1" th:src="@{/js/esri-leaflet@2.1.1.js}"></script>
     <!--Leaflet-->
 
 
@@ -93,7 +93,7 @@
     var crs = new L.Proj.CRS(
         "EPSG:2180",
         "+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs", {});
-    var map = L.map('mapid').setView([51.505, -0.09], 13);
+    var map = L.map('mapid');
 
     //        example 1
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?';
@@ -160,22 +160,6 @@
 
     //        tiles.addTo(map);
 
-    L.marker([51.5, -0.09]).addTo(map)
-        .bindPopup("<b>Hello world!</b><br />I am a popup.");
-
-    L.circle([51.508, -0.11], 500, {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5
-    }).addTo(map).bindPopup("I am a circle.");
-
-    L.polygon([
-        [52.165, 20.973],
-        [52, 21],
-        [52.17, 21.087]
-    ]).addTo(map).bindPopup("I am a polygon.");
-
-
     var popup = L.popup();
 
     function onMapClick(e) {
@@ -184,7 +168,6 @@
             .setContent("You clicked the map at " + e.latlng.toString())
             .openOn(map);
     }
-
     map.on('click', onMapClick);
 
     // create a red polyline from an array of LatLng points
@@ -196,18 +179,6 @@
     var polyline = L.polyline(latlngs, {
         color: 'red'
     }).addTo(map);
-
-    var point = L.point([52.3, 21.2], {
-        color: 'red'
-    });
-    var circle = L.circle([52.17, 21.], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 5
-    }).addTo(map);
-
-    var point1 = L.marker([52.3, 21.4]).addTo(map)
 
     //         zoom the map to the polyline
     map.fitBounds(polyline.getBounds());

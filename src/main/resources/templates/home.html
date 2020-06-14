@@ -4,48 +4,213 @@
     <meta charset="UTF-8">
     <title>GeoV</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <link href="../static/css/custom_style.css" rel="stylesheet">
-    <link href="../../static/css/custom_style.css" th:href="@{/css/custom_style.css}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <link href="../../static/css/custom_style.css" th:href="@{/css/custom_style.css}" rel="stylesheet"/>
+
+    <!--Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <style>
+        #mapid {
+            height: 600px;
+        }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+
+    <!--    transformation   -->
+    <script src="../../static/js/proj4-compressed.js.pobrane" th:src="@{/js/proj4-compressed.js.pobrane}"></script>
+    <script src="../../static/js/proj4leaflet.js.pobrane" th:src="@{/js/proj4leaflet.js.pobrane}"></script>
+    <script src="../../static/js/TileLayer.ProjWMTS.js.pobrane" th:src="@{/js/TileLayer.ProjWMTS.js.pobrane}"></script>
+    <script src="../../static/js/esri-leaflet@2.1.1" th:src="@{/js/esri-leaflet@2.1.1}"></script>
+    <!--Leaflet-->
 
 
-
-
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
-<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>-->
-<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>-->
+    <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>-->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
 
 
 </head>
 
 <body>
-    <div class="container">
-        <div th:replace="fragments/header :: header"></div>
-        <div style="margin-top: 110px"></div>
-        <div class="row">
-            <div class="col-md-2 col-sm-12">
-            </div>
-            <div class="col-md-8 col-sm-12">
-                <h1>Witam</h1>
 
-
-
-            </div>
-            <div class="col-md-2 col-sm-12">
+<div class="container-fluid">
+    <div th:replace="fragments/header :: header"></div>
+    <div style="margin-top: 110px"></div>
+    <div class="row">
+        <div class="col-md-2 col-sm-12">
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <h1>Witam</h1>
+            <!--                        <div class="m-2 p-2 border rounded" th:if="${#request.getUserPrincipal() != null}">-->
+            <div class="m-2 p-2 border rounded">
+                <div id="mapid" style="position: relative;"
+                     class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag"
+                     tabindex="0">
+                    <div class="leaflet-control-container">
+                        <div class="leaflet-top leaflet-left">
+                        </div>
+                        <div class="leaflet-top leaflet-right"></div>
+                        <div class="leaflet-bottom leaflet-left"></div>
+                        <div class="leaflet-bottom leaflet-right">
+                            <div class="leaflet-control-attribution leaflet-control"><a
+                                    href="https://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a>
+                                | Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
+                                contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
+                                Imagery © <a href="https://www.mapbox.com/">Mapbox</a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div style="margin-bottom: 50px"></div>
-        <br>
-        <div th:replace="fragments/footer :: footer"></div>
+        <div class="col-md-2 col-sm-12">
+        </div>
     </div>
+    <div style="margin-bottom: 50px"></div>
+    <br>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<script>
+    proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
+    var crs = new L.Proj.CRS(
+        "EPSG:2180",
+        "+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs", {});
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    //        example 1
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?';
+    const options = {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        tileSize: 512,
+        zoomOffset: -1
+    };
+
+    //        example 2 with WMS
+    var tileWmsUrl = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi";
+    const optionsWms = {
+        layers: 'nexrad-n0r-900913',
+        format: 'image/png',
+        transparent: true,
+        attribution: "Weather data © 2012 IEM Nexrad"
+    };
+
+    //        example 2 with WMS
+    //        const tileWmsUrl = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi";
+    //        const optionsWms = {
+    //        layers: 'nexrad-n0r-900913',
+    //        format: 'image/png',
+    //        transparent: true,
+    //        attribution: "Weather data © 2012 IEM Nexrad"
+    //        };
+
+    //        example 3 ORTO GEOPORTAL
+    var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO', {
+        format: 'image/png',
+        tileSize: 512,
+        version: '1.0.0',
+        transparent: true,
+        crs: crs,
+        origin: [850000.0, 100000.0],
+        scales: [7559538.928571429, 3779769.4642857146, 1889884.7321428573, 944942.3660714286, 472471.1830357143, 236235.59151785716, 94494.23660714286, 47247.11830357143, 23623.559151785714, 9449.423660714287, 4724.711830357143, 1889.8847321428573, 944.9423660714286, 472.4711830357143],
+        tilematrixSet: 'EPSG:2180',
+        opacity: 1,
+        crossOrigin: true,
+        minZoom: 5
+    }).addTo(map);
+
+
+    //        example 4 BDOT GEOPORTAL
+    //        var bdot500 = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {
+    //            format: 'image/png',
+    //            tileSize: 512,
+    //            version: '1.0.0',
+    //            transparent: true,
+    //            crs: crs,
+    //            origin: [850000.0, 100000.0],
+    //            scales: [30238155.714285716, 15119077.857142858, 7559538.928571429, 3779769.4642857146, 1889884.7321428573, 944942.3660714286, 472471.1830357143, 236235.59151785716, 94494.23660714286, 47247.11830357143, 23623.559151785714, 9449.423660714287, 4724.711830357143, 1889.8847321428573, 944.9423660714286, 472.4711830357143],
+    //            tilematrixSet: 'EPSG:2180',
+    //            opacity: 1.0,
+    //            crossOrigin: true,
+    //            minZoom: 5
+    //        }).addTo(map);
+
+    //        tiles example 1
+    //        const tiles = L.tileLayer(tileUrl, options );
+
+    //        tiles example 2 WMS
+    //        const tiles = L.tileLayer.wms(tileWmsUrl, optionsWms);
+
+    //        tiles.addTo(map);
+
+    L.marker([51.5, -0.09]).addTo(map)
+        .bindPopup("<b>Hello world!</b><br />I am a popup.");
+
+    L.circle([51.508, -0.11], 500, {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5
+    }).addTo(map).bindPopup("I am a circle.");
+
+    L.polygon([
+        [52.165, 20.973],
+        [52, 21],
+        [52.17, 21.087]
+    ]).addTo(map).bindPopup("I am a polygon.");
+
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+
+    // create a red polyline from an array of LatLng points
+    var latlngs = [
+        [52.165, 21.1],
+        [52, 21.1],
+        [52.17, 21.]
+    ];
+    var polyline = L.polyline(latlngs, {
+        color: 'red'
+    }).addTo(map);
+
+    var point = L.point([52.3, 21.2], {
+        color: 'red'
+    });
+    var circle = L.circle([52.17, 21.], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 5
+    }).addTo(map);
+
+    var point1 = L.marker([52.3, 21.4]).addTo(map)
+
+    //         zoom the map to the polyline
+    map.fitBounds(polyline.getBounds());
+</script>
 </body>
 </html>

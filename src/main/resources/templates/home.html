@@ -60,6 +60,7 @@
         </div>
         <div class="col-md-8 col-sm-12">
             <h1>Witam</h1>
+            <p th:text="${allUserLocations}">Welcome to</p>
             <!--                        <div class="m-2 p-2 border rounded" th:if="${#request.getUserPrincipal() != null}">-->
             <div class="m-2 p-2 border rounded">
                 <div id="mapid" style="position: relative;"
@@ -113,7 +114,8 @@
     };
 
     //        example 2 with WMS
-    //        const tileWmsUrl = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi";
+    //        const
+    //        = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi";
     //        const optionsWms = {
     //        layers: 'nexrad-n0r-900913',
     //        format: 'image/png',
@@ -176,6 +178,7 @@
         [52, 21.1],
         [52.17, 21.]
     ];
+    // var variable = th:each="locator : ${allUserLocators}
     var polyline = L.polyline(latlngs, {
         color: 'red'
     }).addTo(map);

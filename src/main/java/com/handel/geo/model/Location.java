@@ -13,23 +13,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Locations {
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private float Fi;
-    private float Lambda;
+    private float fi;
+    private float lambda;
     @Nullable
-    private float H;
+    private float h;
 
     @Nullable
-    private float dFi;
-    @Nullable
-    private float dLambda;
-    @Nullable
-    private float dH;
+    private float accuracy;
 
     private LocalDateTime date_time;
 

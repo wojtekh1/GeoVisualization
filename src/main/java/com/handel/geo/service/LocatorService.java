@@ -29,7 +29,7 @@ public class LocatorService {
         return new ArrayList<>(locatorRepository.getAllLocators());
     }
     public List<Locator> getAllUserLocators(Integer userId) {
-        return new ArrayList<>(locatorRepository.getAllUserLocators(userId));
+        return new ArrayList<Locator>(locatorRepository.getAllUserLocators(userId));
     }
 
     public void deleteLocator(String id) {

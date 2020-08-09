@@ -47,10 +47,17 @@
     <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>-->
     <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
 
-
+    <script th:inline="javascript">
+        function loadLocations() {
+            var locations = [[${allUserLocations}]];
+            var latlngs = [];
+            if (locations!=[]) locations.forEach(n => latlngs.push([n.fi, n.lambda]));
+        }
+    </script>
 </head>
 
-<body>
+
+<body onload="loadLocations()">
 
 <div class="container-fluid">
     <div th:replace="fragments/header :: header"></div>
@@ -60,8 +67,6 @@
         </div>
         <div class="col-md-8 col-sm-12">
             <h1>Witam</h1>
-            <p th:text="${allUserLocations}">Welcome to</p>
-            <!--                        <div class="m-2 p-2 border rounded" th:if="${#request.getUserPrincipal() != null}">-->
             <div class="m-2 p-2 border rounded">
                 <div id="mapid" style="position: relative;"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag"
@@ -72,8 +77,8 @@
                         <div class="leaflet-top leaflet-right"></div>
                         <div class="leaflet-bottom leaflet-left"></div>
                         <div class="leaflet-bottom leaflet-right">
-                            <div class="leaflet-control-attribution leaflet-control"><a
-                                    href="https://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a>
+                            <div class="leaflet-control-attribution leaflet-control">
+                                <a href="https://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a>
                                 | Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
                                 contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
                                 Imagery © <a href="https://www.mapbox.com/">Mapbox</a></div>
@@ -89,7 +94,11 @@
     <br>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
-<script>
+<script th:inline="javascript">
+    var locations = [[${allUserLocations}]];
+    var latlngs = [];
+    locations.forEach(n => latlngs.push([n.fi, n.lambda]));
+
     proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
     var crs = new L.Proj.CRS(
         "EPSG:2180",
@@ -112,7 +121,6 @@
         transparent: true,
         attribution: "Weather data © 2012 IEM Nexrad"
     };
-
     //        example 2 with WMS
     //        const
     //        = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi";
@@ -122,7 +130,6 @@
     //        transparent: true,
     //        attribution: "Weather data © 2012 IEM Nexrad"
     //        };
-
     //        example 3 ORTO GEOPORTAL
     var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO', {
         format: 'image/png',
@@ -173,18 +180,24 @@
     map.on('click', onMapClick);
 
     // create a red polyline from an array of LatLng points
-    var latlngs = [
-        [52.165, 21.1],
-        [52, 21.1],
-        [52.17, 21.]
-    ];
-    // var variable = th:each="locator : ${allUserLocators}
+    // var latlngs = [
+    //     [52.165, 21.1],
+    //     [52, 21.1],
+    //     [52.17, 21.]
+    // ];
+
     var polyline = L.polyline(latlngs, {
         color: 'red'
     }).addTo(map);
-
     //         zoom the map to the polyline
+    if (latlngs.length==0) {
+        map.setView([52, 19], 6);
+    }
+    else {
     map.fitBounds(polyline.getBounds());
+    }
 </script>
+
+
 </body>
 </html>

@@ -26,7 +26,7 @@ public interface LocationsRepository extends CrudRepository<Location, Integer>
     @Query(value = "select * from LOCATION l where l.id=:id", nativeQuery = true)
     Location getLocationById(@Param("id") Integer id);
 
-    @Query(value = "select * from LOCATION l where l.LOCATOR=:locatorId order by DATE_TIME", nativeQuery = true)
+    @Query(value = "select l.*  from LOCATION l where l.LOCATOR=:locatorId order by DATE_TIME", nativeQuery = true)
     ArrayList<Location> getLocationsByUser(@Param("locatorId") List<String> locatorId);
 
 //    @Query(value = "select * from LOCATION l where l.USER_ID=:userId order by DATE_TIME", nativeQuery = true)

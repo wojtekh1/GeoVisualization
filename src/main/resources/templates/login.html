@@ -16,9 +16,18 @@
     <link href="../static/css/custom_style.css" rel="stylesheet">
     <link href="../../static/css/custom_style.css" th:href="@{/css/custom_style.css}" rel="stylesheet"/>
 
-
+<!--
+        <link href="../static/css/custom_style.css" th:href="@{/css/custom_style.css}" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+-->
 </head>
-<body>
+<body class="bg-body">
 <div class="container">
     <br>
     <div style="margin-top: 43px"></div>
@@ -30,13 +39,15 @@
                 <div class="col-sm-6 bg-brand rounded-signin border-signin">
 
                     <div class="container mb-4">
-                        <!--<img th:src="@{/images/logo.jpg}" class="img-responsive center-block d-inline" width="300" height="300" alt="Logo" />-->
-                        <!--<h3 class="form-signin-heading d-inline text-white" th:text="Welcome"></h3>-->
-
-                        <h1 style="color: white"><img class="rounded border border-signin ml-4 mt-3"
+                        <h1 style="color: white">
+                            
+<!--
+                            <img class="rounded border border-signin ml-4 mt-3"
                                                       th:src="@{/images/logo.jpg}" alt="" width="40%"
                                                       style="height:auto;">
-                            Witam  </h1>
+-->
+                            <i class="fas fa-map-marked-alt rounded  border-signin mx-4 mt-3 p-3" style="font-size:100px"></i>
+                            Zaloguj się  </h1>
 
 
                         <form th:action="@{/login}" method="POST" class="form-signin">
@@ -44,7 +55,7 @@
                             <br/>
                             <input type="text" id="email" name="email" th:placeholder="Email" class="form-control"/>
                             <br/>
-                            <input type="password" th:placeholder="Password" id="password" name="password"
+                            <input type="password" th:placeholder="Hasło" id="password" name="password"
                                    class="form-control"/> <br/>
 
                             <div align="center" th:if="${param.error}">

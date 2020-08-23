@@ -1,6 +1,7 @@
-html,
+html, 
 body {
     height: 100%;
+/*    background-color: #525252; !important*/
 }
 
 .center-form {
@@ -11,17 +12,30 @@ body {
 
 
 .border-signin {
-    border: 3px solid #acacac !important
+    border: 3px solid #ffffff !important
 }
 
 .bg-brand {
-    background-color: #033e7d; !important
+    background-color: #343a40;
+}
+/*
+.bg-brand {
+    background-color: #033e7d;
+}
+*/
+
+.bg-body {
+    background-color: rgb(186, 186, 186); !important
 }
 
 .rounded-signin {
     border-radius: 2rem !important
 }
-.img {
-    display: inline-block;
-    float: left;
+.bar-color{
+    background-color:#343a40;
 }
+.top-margin{
+    margin-top: 80;
+}
+
+

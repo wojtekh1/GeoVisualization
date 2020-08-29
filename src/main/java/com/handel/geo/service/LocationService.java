@@ -32,9 +32,14 @@ public class LocationService {
     public List<Location> getAllLocations() {
         return new ArrayList<>(locationsRepository.getAllLocations());
     }
+    public List<Location> getLastLocatorLocations(Integer userId) {
+        List<String> allUserLocatorsId = locatorRepository.getAllUserLocatorsId(userId);
+//        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
+        return new ArrayList<Location>(locationsRepository.getLastLocatorLocations(allUserLocatorsId));
+    }
     public List<Location> getAllUserLocations(Integer userId) {
         List<String> allUserLocatorsId = locatorRepository.getAllUserLocatorsId(userId);
-//        System.out.println("Repozytorium wynik:_"+allUserLocatorsId);
+//        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
         return new ArrayList<Location>(locationsRepository.getLocationsByUser(allUserLocatorsId));
     }
 
@@ -49,4 +54,6 @@ public class LocationService {
     public void updateLocator(Location location) {
         locationsRepository.save(location);
     }
+
+
 }

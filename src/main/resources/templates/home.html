@@ -5,6 +5,7 @@
     <title>GeoV</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/images/logo.svg}">
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -51,13 +52,17 @@
 -->
     
 
-    <script th:inline="javascript">
-        function loadLocations() {
-            var locations = [[${allUserLocations}]];
-            var latlngs = [];
-            if (locations != []) locations.forEach(n => latlngs.push([n.fi, n.lambda]));
-        }
-    </script>
+<!--    <script th:inline="javascript">-->
+<!--        function loadLocations() {-->
+<!--            var locations = [[${allUserLocations}]];-->
+<!--            var latLngs = [];-->
+<!--            if (locations != []) locations.forEach(n => latLngs.push([n.fi, n.lambda]));-->
+
+<!--            var lastLocations = [[${lastLocatorsLocations}]];-->
+<!--            var lastLatLngs = [];-->
+<!--            if (lastLocations != []) locations.forEach(n => lastLatLngs.push([n.fi, n.lambda]));-->
+<!--        }-->
+<!--    </script>-->
 </head>
 <body onload="loadLocations()" class="bg-body">
 
@@ -95,6 +100,7 @@
         <div class="col-md-9 col-sm-12" style="height: 70%">
             <div style="margin-top: 80px" class="bar-color"></div>
             <h1>Witam</h1>
+            <p th:text="${lastLocatorsLocations}"></p>
             <div class="m-2 p-2 border rounded">
                 <div id="mapid" style="position: relative;"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
@@ -121,14 +127,21 @@
 </div>
 <script th:inline="javascript">
     var locations = [[${allUserLocations}]];
-    var latlngs = [];
-    locations.forEach(n => latlngs.push([n.fi, n.lambda]));
+    var latLngs = [];
+    locations.forEach(n => latLngs.push([n.fi, n.lambda]));
+
+    var lastLocations = [[${lastLocatorsLocations}]];
+    var lastLatLngs = [];
+    lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda]));
 
     proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
     var crs = new L.Proj.CRS(
         "EPSG:2180",
         "+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs", {});
     var map = L.map('mapid');
+    // var map = L.map('mapid', {
+    //     renderer: L.svg()
+    // });
 
     //        example 1
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?';
@@ -202,25 +215,23 @@
             .setContent("You clicked the map at " + e.latlng.toString())
             .openOn(map);
     }
-
     map.on('click', onMapClick);
 
-    // create a red polyline from an array of LatLng points
-    // var latlngs = [
-    //     [52.165, 21.1],
-    //     [52, 21.1],
-    //     [52.17, 21.]
-    // ];
+    var markerPolyline = L.polyline(lastLatLngs);
 
-    var polyline = L.polyline(latlngs, {
-        color: 'red'
+    var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',iconAnchor: [18, 51] });
+    var marker = L.marker(lastLatLngs[0], {icon: myIcon}).addTo(map);
+    var marker = L.marker(lastLatLngs[1], {icon: myIcon}).addTo(map);
+    //         zoom the map to the center and markers
+    map.setView([52, 19], 6);
+    map.fitWorld();
+    if (latLngs.length != 0) {
+        map.flyToBounds(markerPolyline.getBounds());
+    };
+    var polyline = L.polyline(latLngs, {
+        color: 'red',
+        opacity: 0.5
     }).addTo(map);
-    //         zoom the map to the polyline
-    if (latlngs.length == 0) {
-        map.setView([52, 19], 6);
-    } else {
-        map.fitBounds(polyline.getBounds());
-    }
 </script>
 
 

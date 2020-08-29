@@ -38,4 +38,7 @@ body {
     margin-top: 80;
 }
 
-
+.marker-color{
+    color: #ff9300;
+    opacity: 0.8;
+}

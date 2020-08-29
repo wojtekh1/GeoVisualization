@@ -29,7 +29,7 @@ public class HomeController {
     public ModelAndView home() {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         Locator locator = new Locator();
-        System.out.println(authName.equals("anonymousUser"));
+//        System.out.println(authName.equals("anonymousUser"));
         System.out.println(authName);
         System.out.println(locator.getUser());
 //        if(!authName.equals("anonymousUser")) {
@@ -40,11 +40,15 @@ public class HomeController {
 //            List<Locator> allUserLocators=new ArrayList<>
 //        }
         List<Location> allUserLocations;
-        allUserLocations = locationService.getAllUserLocations(userService.findUserIdByEmail(authName));
+        List<Location> lastLocatorsLocations;
+        Integer userId = userService.findUserIdByEmail(authName);
+        allUserLocations = locationService.getAllUserLocations(userId);
+        lastLocatorsLocations = locationService.getLastLocatorLocations(userId);
         ModelAndView modelAndView = new ModelAndView();
         Users user = userService.findUserByEmail(authName);
         modelAndView.addObject("allUserLocators", allUserLocators);
         modelAndView.addObject("allUserLocations", allUserLocations);
+        modelAndView.addObject("lastLocatorsLocations", lastLocatorsLocations);
         modelAndView.addObject("user", user);
         if(!authName.equals("anonymousUser")) {
             locator.setUser(userService.findUserByEmail(authName));
@@ -52,6 +56,10 @@ public class HomeController {
         modelAndView.addObject("locator", locator);
 
         modelAndView.setViewName("home");
+        System.out.println(user);
+        System.out.println(userId);
+        System.out.println("Locators :"+allUserLocators);
+        System.out.println("Locations :"+allUserLocations);
         return modelAndView;
     }
 }

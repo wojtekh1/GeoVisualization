@@ -34,6 +34,9 @@ public interface LocationsRepository extends CrudRepository<Location, Integer>
             "and l.LOCATOR=LOCALIZATOR) where l.LOCATOR in(:locatorId)", nativeQuery = true)
     ArrayList<Location> getLastLocatorLocations(@Param("locatorId") List<String> locatorId);
 
+    @Query(value = "select l.* from LOCATION l where l.LOCATOR in(:locatorId)", nativeQuery = true)
+    ArrayList<Location> getLocatorLocations(@Param("locatorId") String locatorId);
+
 //    @Query(value = "select * from LOCATION l where l.USER_ID=:userId order by DATE_TIME", nativeQuery = true)
 //    ArrayList<Location> getLocationsByUserAndDates(@Param("userId") Integer userId);
 }

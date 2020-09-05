@@ -42,7 +42,9 @@ public class LocationService {
 //        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
         return new ArrayList<Location>(locationsRepository.getLocationsByUser(allUserLocatorsId));
     }
-
+    public List<Location> getLocatorLocations(String id) {
+        return new ArrayList<Location>(locationsRepository.getLocatorLocations(id));
+    }
     public void deleteLocation(Integer id) {
         locationsRepository.deleteLocationById(id);
     }
@@ -54,6 +56,4 @@ public class LocationService {
     public void updateLocator(Location location) {
         locationsRepository.save(location);
     }
-
-
 }

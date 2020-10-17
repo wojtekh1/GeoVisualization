@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public interface LocationsRepository extends CrudRepository<Location, Integer>
 
     @Query(value = "select l.* from LOCATION l where l.LOCATOR in(:locatorId)", nativeQuery = true)
     ArrayList<Location> getLocatorLocations(@Param("locatorId") String locatorId);
+
+    @Query(value = "select l.* from LOCATION l where l.LOCATOR in(:locatorId) and l.DATE_TIME between :fromDate and :toDate", nativeQuery = true)
+    ArrayList<Location> getLocatorLocationsByDate(@Param("locatorId") String locatorId, @Param("fromDate") LocalDateTime from,@Param("toDate")  LocalDateTime to);
 
 //    @Query(value = "select * from LOCATION l where l.USER_ID=:userId order by DATE_TIME", nativeQuery = true)
 //    ArrayList<Location> getLocationsByUserAndDates(@Param("userId") Integer userId);

@@ -23,11 +23,6 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
             integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
             crossorigin=""></script>
-    <style>
-        #mapid {
-            height: 600px;
-        }
-    </style>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
             integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
             crossorigin=""></script>
@@ -39,7 +34,7 @@
     <script src="../../static/js/esri-leaflet@2.1.1" th:src="@{/js/esri-leaflet@2.1.1.js}"></script>
     <!--Leaflet-->
 
-    
+
 <!--
         <link href="../static/css/custom_style.css" th:href="@{/css/custom_style.css}" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -50,7 +45,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 -->
-    
+
 
 <!--    <script th:inline="javascript">-->
 <!--        function loadLocations() {-->
@@ -87,8 +82,33 @@
 -->
         <div class="col-md-9 col-sm-12" style="height: 70%">
             <div style="margin-top: 80px" class="bar-color"></div>
-            <h1>Witam</h1>
+<!--            <h1>Witam</h1>-->
 <!--            <p th:text="${lastLocatorsLocations}"></p>-->
+<!--                <p th:text="${range.getDateTimeTo().toString().substring(0,16)}"></p>-->
+            <div th:if="${#request.getUserPrincipal() != null}">
+                <div class="row">
+                    <div class="form-group col-md-6 d-flex justify-content-center px-2  mb-2">
+<!--                        <p th:text="*{range.dateTimeFrom}"></p>-->
+<!--                        <p th:text="*{range.dateTimeTo}"></p>-->
+                        <div class="d-inline-block">
+                            <label class="" for="date_from">Data od:</label>
+<!--                            <input th:field="*{range.dateTimeFrom}" type="datetime-local" class="form-control p-1" id="date_from0" name="date_from" >-->
+<!--                            <input th:field="*{range.dateTimeFrom.toString().substring(0,16)}" type="datetime-local" class="form-control p-1" id="date_from2" name="date_from">-->
+                            <input type="datetime-local" class="form-control p-1" id="date_from" name="date_from" th:value="${range.getDateTimeFrom().toString().substring(0,16)}">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5 d-flex justify-content-center px-2 mb-2">
+                        <div class="d-inline-block">
+                            <label for="date_to">Data do:</label>
+                            <input type="datetime-local" class="form-control p-1" id="date_to" name="date_to" th:value="${range.getDateTimeTo().toString().substring(0,16)}">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 d-flex justify-content-center mb-2">
+                        <button type="button" onclick="filter()" class="btn btn-dark my-auto">Filtruj</button>
+                    </div>
+                </div>
+            </div>
             <div class="m-2 p-2 border rounded">
                 <div id="mapid" style="position: relative;"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
@@ -113,6 +133,7 @@
     <br>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
+
 <script th:inline="javascript">
     var locations = [[${allLocatorLocations}]];
     var latLngs = [];
@@ -236,8 +257,15 @@
         },2000);
     map.viewreset;
 
+    function filter() {
+        arr = window.location.href.split('/');
+        arr[5] = document.getElementById('date_from').value;
+        arr[5] =arr[5].replace('T', "%20") + ":00.00";
+        arr[6] = document.getElementById('date_to').value;
+        arr[6] =arr[6].replace('T', "%20") + ":59.99";
+        href = arr.join('/');
+        window.location.assign(href);
+    }
 </script>
-
-
 </body>
 </html>

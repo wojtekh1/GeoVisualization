@@ -1,5 +1,6 @@
 package com.handel.geo.service;
 
+import com.handel.geo.model.DateTimeRange;
 import com.handel.geo.model.Location;
 import com.handel.geo.model.Locator;
 import com.handel.geo.repository.LocationsRepository;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,9 @@ public class LocationService {
     public List<Location> getLocatorLocations(String id) {
         return new ArrayList<Location>(locationsRepository.getLocatorLocations(id));
     }
+    public List<Location> getLocatorLocationsByDate(String id, DateTimeRange range) {
+        return new ArrayList<Location>(locationsRepository.getLocatorLocationsByDate(id,range.getDateTimeFrom(),range.getDateTimeTo()));
+    }
     public void deleteLocation(Integer id) {
         locationsRepository.deleteLocationById(id);
     }
@@ -55,5 +61,14 @@ public class LocationService {
 
     public void updateLocator(Location location) {
         locationsRepository.save(location);
+    }
+
+
+    public DateTimeRange setRange(String fromDateTime, String toDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
+        LocalDateTime fromDate = LocalDateTime.parse(fromDateTime, formatter);
+        LocalDateTime toDate = LocalDateTime.parse(toDateTime, formatter);
+        DateTimeRange range = new DateTimeRange(fromDate,toDate);
+        return range;
     }
 }

@@ -103,7 +103,7 @@
 
     var lastLocations = [[${lastLocatorsLocations}]];
     var lastLatLngs = [];
-    lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda,n.locator.name]));
+    lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda,n.locator.name+"&"+n.locator.id]));
 
     proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
     var crs = new L.Proj.CRS(
@@ -169,16 +169,24 @@
             .setContent("You clicked the map at " + e.latlng.toString())
             .openOn(map);
     }
+    function onMarkerClick(e){
+        lastMarker.forEach((value,index) => {
+            if(value._leaflet_id == e.target._leaflet_id) {
+                window.location.assign(window.location.href+'location/'
+                +lastLatLngs[index][2].split("&")[1]); }
+        })
+    }
     map.on('click', onMapClick);
 
     var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
                             iconAnchor: [18, 51] });
     lastCircleMarker = [];
     lastMarker = [];
-    lastLatLngs.forEach(value => {
+    lastLatLngs.forEach((value,index) => {
         lastMarker.push(L.marker(value, {icon: myIcon}).addTo(map));
         // lastCircleMarker.push(L.circleMarker(value).addTo(map));
-        lastMarker[lastMarker.length-1].bindTooltip(value[2], {direction:'top', offset: [0,-51], permanent: true});
+        lastMarker[lastMarker.length-1].bindTooltip(value[2].split("&")[0], {direction:'top', offset: [0,-51], permanent: true});
+        lastMarker[lastMarker.length-1].on('click', onMarkerClick);
         });
 
     //         zoom the map to the center and markers

@@ -114,15 +114,17 @@
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?';
     const options = {
         attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-        tileSize: 512,
-        zoomOffset: -1
+        // tileSize: 512,
+        // zIndex: 10,
+        // zoomOffset: -1
+        maxZoom: 19
     };
     const osm = L.tileLayer(tileUrl, options );
 
     //        example 3 ORTO GEOPORTAL
     var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO', {
         format: 'image/png',
-        tileSize: 512,
+        // tileSize: 512,
         version: '1.0.0',
         transparent: true,
         crs: crs,
@@ -131,13 +133,14 @@
         tilematrixSet: 'EPSG:2180',
         opacity: 1,
         crossOrigin: true,
-        minZoom: 5
+        minZoom: 5,
+        maxZoom: 19
     })
 
     //        example 4 BDOT GEOPORTAL
     var bdot500 = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {
        format: 'image/png',
-       tileSize: 512,
+       // tileSize: 512,
        version: '1.0.0',
        transparent: true,
        crs: crs,
@@ -146,7 +149,8 @@
        tilematrixSet: 'EPSG:2180',
        opacity: 1.0,
        crossOrigin: true,
-       minZoom: 5
+       minZoom: 5,
+       maxZoom: 19
     })
     var map = L.map('mapid',{
         // center: [52, 19],
@@ -188,6 +192,7 @@
         lastMarker[lastMarker.length-1].bindTooltip(value[2].split("&")[0], {direction:'top', offset: [0,-51], permanent: true});
         lastMarker[lastMarker.length-1].on('click', onMarkerClick);
         });
+    L.control.scale().addTo(map);
 
     //         zoom the map to the center and markers
     map.setView([52, 19], 6);

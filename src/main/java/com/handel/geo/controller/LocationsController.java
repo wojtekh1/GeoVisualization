@@ -31,7 +31,7 @@ public class LocationsController {
     LocationService locationService;
 
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
-    public ModelAndView showLocator(@PathVariable("id") String id) {
+    public ModelAndView showLocator(@PathVariable("id") Long id) {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
@@ -63,7 +63,7 @@ public class LocationsController {
     }
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
     @RequestMapping(value = "/location/{id}/{from}/{to}", method = RequestMethod.GET)
-    public ModelAndView showLocatorBetween(@PathVariable("id") String id, @PathVariable("from") String fromDateTime, @PathVariable("to") String toDateTime) {
+    public ModelAndView showLocatorBetween(@PathVariable("id") Long id, @PathVariable("from") String fromDateTime, @PathVariable("to") String toDateTime) {
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -21,9 +21,12 @@ import java.util.UUID;
 public class Locator {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid2")
-    private String id;
+    private String apiKey;
 
     @NotEmpty(message = "Wypełnij opis dodatkowy")
     private String description;
@@ -36,9 +39,4 @@ public class Locator {
 
     @NotEmpty(message = "Wypełnij nazwę nadajnika")
     private String name;
-
-    @Nullable
-    private String imageLink;
-
-
 }

@@ -1,6 +1,7 @@
 package com.handel.geo.repository;
 
 import com.handel.geo.model.Locator;
+import com.handel.geo.model.Users;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -30,7 +31,12 @@ public interface LocatorRepository extends CrudRepository<Locator, Integer>
     void deleteLocatorById(@Param("id") String id);
 
 
-    @Query(value = "select * from LOCATOR l where l.ID=:id", nativeQuery = true)
-    Locator getLocatorById(@Param("id") String id);
-    
+    @Query(value = "select * from LOCATOR l where l.id=:id", nativeQuery = true)
+    Locator getLocatorById(@Param("id") Long id);
+
+    @Query(value = "select l.user from Locator as l where l.apiKey=:apiKey")
+    Users getUserByApiKey(@Param("apiKey") String apiKey);
+
+    @Query(value = "select l.id from Locator as l where l.apiKey=:key")
+    Long getLocatorIdByApiKey(@Param("key") String key);
 }

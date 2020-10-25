@@ -76,7 +76,7 @@ public class LocatorsController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editLocator(@PathVariable("id") String id) {
+    public ModelAndView editLocator(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
         System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());

@@ -45,10 +45,10 @@ public class LocationService {
 //        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
         return new ArrayList<Location>(locationsRepository.getLocationsByUser(allUserLocatorsId));
     }
-    public List<Location> getLocatorLocations(String id) {
+    public List<Location> getLocatorLocations(Long id) {
         return new ArrayList<Location>(locationsRepository.getLocatorLocations(id));
     }
-    public List<Location> getLocatorLocationsByDate(String id, DateTimeRange range) {
+    public List<Location> getLocatorLocationsByDate(Long id, DateTimeRange range) {
         return new ArrayList<Location>(locationsRepository.getLocatorLocationsByDate(id,range.getDateTimeFrom(),range.getDateTimeTo()));
     }
     public void deleteLocation(Integer id) {

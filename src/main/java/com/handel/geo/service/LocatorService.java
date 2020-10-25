@@ -1,7 +1,9 @@
 package com.handel.geo.service;
 
 import com.handel.geo.model.Locator;
+import com.handel.geo.model.Users;
 import com.handel.geo.repository.LocatorRepository;
+import com.handel.geo.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,12 +16,13 @@ import java.util.List;
 @Service("locatorService")
 public class LocatorService {
 
-    @Autowired
-    UserService userService;
-
     @Qualifier("locatorRepository")
     @Autowired
     private LocatorRepository locatorRepository;
+
+    @Qualifier("usersRepository")
+    @Autowired
+    private UsersRepository usersRepository;
 
     public Locator saveLocator(Locator locator){
         return locatorRepository.save(locator);
@@ -37,11 +40,19 @@ public class LocatorService {
         locatorRepository.deleteLocatorById(id);
     }
 
-    public Locator getLocator(String id) {
+    public Locator getLocator(Long id) {
         return locatorRepository.getLocatorById(id);
     }
 
     public void updateLocator(Locator locator) {
         locatorRepository.save(locator);
+    }
+
+    public List<Locator> getAllUserLocatorsByApiKey(String apiKey) {
+        Users user= locatorRepository.getUserByApiKey(apiKey);
+        return new ArrayList<Locator>(locatorRepository.getAllUserLocators(user.getUserId()));
+    }
+    public Locator getLocatorByApiKey(String apiKey) {
+        return locatorRepository.getLocatorById(locatorRepository.getLocatorIdByApiKey(apiKey));
     }
 }

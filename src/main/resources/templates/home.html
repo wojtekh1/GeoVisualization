@@ -121,11 +121,11 @@
     };
     const osm = L.tileLayer(tileUrl, options );
 
-    //        example 3 ORTO GEOPORTAL
+           // example 3 ORTO GEOPORTAL  https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO
     var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO', {
         format: 'image/png',
-        // tileSize: 512,
-        version: '1.0.0',
+        tileSize: 512,
+        version: '1.1.1',
         transparent: true,
         crs: crs,
         origin: [850000.0, 100000.0],
@@ -135,7 +135,16 @@
         crossOrigin: true,
         minZoom: 5,
         maxZoom: 19
-    })
+    });
+    // var orto = L.tileLayer.wms("http://mapy.geoportal.gov.pl/wss/service/img/guest/ORTO/MapServer/WMSServer",
+    //     {   layers:"Raster",
+    //         format: 'image/png',
+    //         transparent : 'true',
+    //         version : '1.1.1',
+    //         minZoom: 5,
+    //         maxZoom: 19
+    //         // tileSize: 512
+    //     });
 
     //        example 4 BDOT GEOPORTAL
     var bdot500 = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {

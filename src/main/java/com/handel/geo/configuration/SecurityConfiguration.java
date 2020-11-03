@@ -52,7 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/registration").permitAll()
                 .antMatchers("/registration").permitAll()
                 .and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login")
+//                .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/",true)
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -60,8 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .and().logout().deleteCookies("JSESSIONID").and().rememberMe().key("remember-me-new")
-                .and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .and().exceptionHandling();
+//                .accessDeniedPage("/access-denied");
     }
 
     @Override

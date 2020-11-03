@@ -1,5 +1,6 @@
 package com.handel.geo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,9 +29,11 @@ public class Locator {
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String apiKey;
 
+    @JsonIgnore
     @NotEmpty(message = "Wypełnij opis dodatkowy")
     private String description;
 
+    @JsonIgnore
     private LocalDateTime modyficationDate;
 
     @ManyToOne(cascade = CascadeType.ALL)

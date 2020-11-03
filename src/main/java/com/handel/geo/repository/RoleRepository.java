@@ -3,6 +3,7 @@ package com.handel.geo.repository;
 import com.handel.geo.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     @Query(value = "select * from Role where TYPE='USER'", nativeQuery = true)
     List<Role> findUserRole();
+
+    @Query(value = "select * from Role where TYPE=:role", nativeQuery = true)
+    List<Role> findRole(@Param("role") String role);
 }

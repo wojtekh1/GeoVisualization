@@ -18,6 +18,7 @@ import java.util.List;
 @Table(name = "Users")
 public class Users {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "User_Id")

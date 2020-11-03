@@ -3,11 +3,9 @@ package com.handel.geo.service;
 
 import com.handel.geo.model.Location;
 import com.handel.geo.model.Locator;
-import com.handel.geo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -35,7 +33,15 @@ public class ApiService {
         return locationService.getLastLocatorLocations(locator.getUser().getUserId()).get(0);
     }
 
-
-//    public Location postLocation(String apiKey) {
-//    }
+    public Location postLocation(@RequestBody  Location location) {
+        Locator locator=locatorService.getLocatorByApiKey(location.getLocator().getApiKey());
+        Location locationNew = new Location(
+                location.getFi(),
+                location.getLambda(),
+                location.getH(),
+                location.getAccuracy(),
+                location.getDate_time(),
+                locator);
+        return locationService.saveLocation(locationNew);
+    }
 }

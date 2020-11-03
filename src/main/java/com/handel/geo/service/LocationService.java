@@ -7,10 +7,13 @@ import com.handel.geo.repository.LocationsRepository;
 import com.handel.geo.repository.LocatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,4 +74,30 @@ public class LocationService {
         DateTimeRange range = new DateTimeRange(fromDate,toDate);
         return range;
     }
+    public Location saveLocation(Location location){
+        long between = ChronoUnit.MINUTES.between(LocalDateTime.now(),location.getDate_time());
+        if(0<between || between<-(24*60)){
+            location.setDate_time(null);
+            return location;
+        }if (location.getFi()<-90 || location.getFi()>90){
+            location.setFi(Float.NaN);
+            return location;
+        }if(location.getLambda() < -180 || location.getLambda()>180){
+            location.setLambda(Float.NaN);
+            return location;
+        }else {
+            return locationsRepository.save(location);
+        }
+    }
+
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillTestData() {
+//        saveLocation(new Location(52.162523f,21.044935f,130,0,LocalDateTime.of(2020, 10,14,12,18,06,82),locatorRepository.getLocatorById(1L)));
+//        saveLocation(new Location(52.161813f,21.043848f,131,0,LocalDateTime.of(2020, 10,14,12,19,06,82),locatorRepository.getLocatorById(1L)));
+//        saveLocation(new Location(52.159648f,21.045994f,129,0,LocalDateTime.of(2020, 10,14,12,20,06,82),locatorRepository.getLocatorById(1L)));
+//        saveLocation(new Location(52.182523f,21.034935f,130,0,LocalDateTime.of(2020, 10,14,12,18,06,82),locatorRepository.getLocatorById(2L)));
+//        saveLocation(new Location(52.181813f,21.033848f,131,0,LocalDateTime.of(2020, 10,14,12,19,06,82),locatorRepository.getLocatorById(2L)));
+//        saveLocation(new Location(52.169648f,21.035994f,129,0,LocalDateTime.of(2020, 10,14,12,20,06,82),locatorRepository.getLocatorById(2L)));
+//    }
 }

@@ -6,6 +6,8 @@ import com.handel.geo.model.Role;
 import com.handel.geo.repository.RoleRepository;
 import com.handel.geo.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -76,4 +78,19 @@ public class UserService {
         return usersRepository.findUsersByUserId(id);
     }
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void fillTestData() {
+//        System.out.println("ROLEEEE: "+roleRepository.findRole("ADMIN"));
+//        Users user = new Users();
+//        user.setPassword("a");
+//        user.setEmail("a");
+//        user.setRoles(roleRepository.findRole("ADMIN"));
+//        saveNewUser(user);
+//
+//        Users user2 = new Users();
+//        user2.setPassword("b");
+//        user2.setEmail("b");
+//        user2.setRoles(roleRepository.findRoleId("ADMIN"));
+//        saveNewUser(user2);
+    }
 }

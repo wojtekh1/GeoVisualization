@@ -1,9 +1,12 @@
 package com.handel.geo.configuration;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,7 +17,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableAutoConfiguration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -40,16 +45,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity security) throws Exception {
 
-        http.
-                authorizeRequests()
+        security
+                .httpBasic()
+                .and().authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/h2-console/*").permitAll()
 //                .antMatchers("/").permitAll()
                 .antMatchers("/index").permitAll()
                 .antMatchers("/locators").hasAnyAuthority("USER","ADMIN")
                 .antMatchers("/location").hasAnyAuthority("USER","ADMIN")
+                .antMatchers("/allLocators").hasAnyAuthority("ADMIN")
 //                .antMatchers("/registration").permitAll()
+                .antMatchers("/locators/*").authenticated()
+                .antMatchers("/location/*").authenticated()
                 .antMatchers("/registration").permitAll()
                 .and().csrf().disable().formLogin()
                 .loginPage("/login")
@@ -61,8 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .and().logout().deleteCookies("JSESSIONID").and().rememberMe().key("remember-me-new")
-                .and().exceptionHandling();
-//                .accessDeniedPage("/access-denied");
+                .and().exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 
     @Override

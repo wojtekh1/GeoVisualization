@@ -61,7 +61,7 @@ public class LocatorsController {
                 locatorService.saveLocator(locator);
                 modelAndView.setViewName("redirect:/locators");
             } else {
-                modelAndView.setViewName("access-denied.html");
+                modelAndView.setViewName("access-denied");
             }
         }
         return modelAndView;
@@ -70,8 +70,14 @@ public class LocatorsController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView deleteLocator(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView();
-        locatorService.deleteLocator(id);
-        modelAndView.setViewName("redirect:/locators");
+        Locator locator = locatorService.getLocator(Long.parseLong(id));
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (locatorService.checkAccess(locator.getApiKey(),authName)) {
+            locatorService.deleteLocator(Long.parseLong(id));
+            modelAndView.setViewName("redirect:/locators");
+        }else {
+            modelAndView.setViewName("access-denied");
+        };
         return modelAndView;
     }
 
@@ -79,9 +85,14 @@ public class LocatorsController {
     public ModelAndView editLocator(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
-        System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());
-        modelAndView.addObject("locator", locator);
-        modelAndView.setViewName("editLocatorForm");
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (locatorService.checkAccess(locator.getApiKey(),authName)) {
+            System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());
+            modelAndView.addObject("locator", locator);
+            modelAndView.setViewName("editLocatorForm");
+        }else {
+            modelAndView.setViewName("access-denied");
+        };
         return modelAndView;
     }
 

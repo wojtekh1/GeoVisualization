@@ -9,6 +9,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -25,10 +27,21 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
     public void fillTestData() {
         saveRole(new Role(1,"ADMIN"));
         saveRole(new Role(2,"USER"));
+    }
+    public List<Role> getAllRoles(){
+        return roleRepository.findAllRoles();
+    }
+    public List<Role> getUserRole() {
+        return roleRepository.findUserRole();
+    }
+
+    public Role findRole(String role) {
+        return roleRepository.findRole(role);
     }
 //    INSERT INTO ROLE VALUES (1,'ADMIN');
 //    INSERT INTO ROLE VALUES (2,'USER');

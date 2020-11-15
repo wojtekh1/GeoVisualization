@@ -9,6 +9,8 @@ import com.handel.geo.service.LocatorService;
 import com.handel.geo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,33 +34,34 @@ public class LocationsController {
 
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
     public ModelAndView showLocator(@PathVariable("id") Long id) {
-        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
-        System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());
-        modelAndView.addObject("locator", locator);
-        modelAndView.setViewName("location");
-        List<Locator> allUserLocators;
-        allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
-        Users user = userService.findUserByEmail(authName);
-        List<Location> allLocatorLocations;
-        allLocatorLocations = locationService.getLocatorLocations(id);
-        modelAndView.addObject("allUserLocators", allUserLocators);
-        modelAndView.addObject("allLocatorLocations", allLocatorLocations);
-        modelAndView.addObject("user", user);
-        if(!authName.equals("anonymousUser")) {
-            locator.setUser(userService.findUserByEmail(authName));
-        }
-//        System.out.println(user);
-//        System.out.println(userId);
-//        System.out.println("Locators :"+allUserLocators);
-//        System.out.println("Locations :"+allUserLocations);
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        DateTimeRange range = new DateTimeRange();
-//        range.setDateTimeFrom(LocalDateTime.parse(range.getDateTimeFrom().toString().substring(0,10)+" 00:00",formatter));
-        range.setDateTimeFrom(allLocatorLocations.get(0).getDate_time());
-        modelAndView.addObject("range", range);
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (locatorService.checkAccess(locator.getApiKey(),authName)) {
+            System.out.println("LOKALIZATOR ID z metody GET-------" + locator.getId());
+            modelAndView.addObject("locator", locator);
+            modelAndView.setViewName("location");
+            List<Locator> allUserLocators;
+            allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
+            Users user = userService.findUserByEmail(authName);
+            List<Location> allLocatorLocations;
+            allLocatorLocations = locationService.getLocatorLocations(id);
+            if (allLocatorLocations.size()==0) {
+                modelAndView.setViewName("redirect:/");
+                return modelAndView;
+            }
+            modelAndView.addObject("allUserLocators", allUserLocators);
+            modelAndView.addObject("allLocatorLocations", allLocatorLocations);
+            modelAndView.addObject("user", user);
+            if (!authName.equals("anonymousUser")) {
+                locator.setUser(userService.findUserByEmail(authName));
+            }
+            DateTimeRange range = new DateTimeRange();
+            range.setDateTimeFrom(allLocatorLocations.get(0).getDate_time());
+            modelAndView.addObject("range", range);
+        }else {
+            modelAndView.setViewName("access-denied");
+        };
         return modelAndView;
     }
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
@@ -67,34 +70,25 @@ public class LocationsController {
         ModelAndView modelAndView = new ModelAndView();
         Locator locator = locatorService.getLocator(id);
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users user = userService.findUserByEmail(authName);
-        List<Locator> allUserLocators;
-        allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
-        List<Location> allLocatorLocationsByDate;
-
-
-
-//        String dateFrom=fromDateTime.toString().substring(0,10);
-//        String dateTo=toDateTime.toString().substring(0,10);
-//        String timeFrom=fromDateTime.toString().substring(11,16);
-//        String timeTo=toDateTime.toString().substring(11,16);;
-//        modelAndView.addObject("dateFrom", dateFrom);
-//        modelAndView.addObject("dateTo", dateTo);
-//        modelAndView.addObject("timeFrom", timeFrom);
-//        modelAndView.addObject("timeTo", timeTo);
-
-//        DateTimeRange range = new DateTimeRange();
-        DateTimeRange range = locationService.setRange(fromDateTime,toDateTime);
-        modelAndView.addObject("range", range);
-        allLocatorLocationsByDate = locationService.getLocatorLocationsByDate(id,range);
-        modelAndView.addObject("locator", locator);
-        modelAndView.addObject("allUserLocators", allUserLocators);
-        modelAndView.addObject("allLocatorLocations", allLocatorLocationsByDate);
-        modelAndView.addObject("user", user);
-        if(!authName.equals("anonymousUser")) {
-            locator.setUser(userService.findUserByEmail(authName));
-        }
-        modelAndView.setViewName("location");
+        if (locatorService.checkAccess(locator.getApiKey(),authName)) {
+            Users user = userService.findUserByEmail(authName);
+            List<Locator> allUserLocators;
+            allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
+            List<Location> allLocatorLocationsByDate;
+            DateTimeRange range = locationService.setRange(fromDateTime, toDateTime);
+            modelAndView.addObject("range", range);
+            allLocatorLocationsByDate = locationService.getLocatorLocationsByDate(id, range);
+            modelAndView.addObject("locator", locator);
+            modelAndView.addObject("allUserLocators", allUserLocators);
+            modelAndView.addObject("allLocatorLocations", allLocatorLocationsByDate);
+            modelAndView.addObject("user", user);
+            if (!authName.equals("anonymousUser")) {
+                locator.setUser(userService.findUserByEmail(authName));
+            }
+            modelAndView.setViewName("location");
+        }else {
+            modelAndView.setViewName("access-denied");
+        };
         return modelAndView;
     }
 }

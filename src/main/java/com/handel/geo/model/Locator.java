@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,7 +17,6 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 //@Table(name = "locator")
 public class Locator {
@@ -25,6 +25,7 @@ public class Locator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Generated
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String apiKey;
@@ -42,4 +43,8 @@ public class Locator {
 
     @NotEmpty(message = "Wypełnij nazwę nadajnika")
     private String name;
+
+    public Locator() {
+        this.apiKey=UUID.randomUUID().toString();
+    }
 }

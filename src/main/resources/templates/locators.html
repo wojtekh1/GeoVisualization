@@ -73,7 +73,8 @@
 
                             <a th:href="${'/edit/'+locator.id}" class="btn btn-outline-info ml-auto m-2">Edytuj nadajnik</a>
                         </div>
-                        <div class="ml-auto" th:if="${#request.getUserPrincipal() != null && #request.getUserPrincipal().toString().contains('ADMIN')}">
+                        <div class="ml-auto" th:if="${#request.getUserPrincipal() != null &&
+                        (#request.getUserPrincipal().toString().contains('ADMIN') || #request.getUserPrincipal().getName().equals(locator.user.getEmail()))}">
                             <a th:href="${'/delete/'+locator.id}" class="btn btn-outline-danger ml-auto m-2">Usuń nadajnik</a>
                         </div>
                     </div>

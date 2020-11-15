@@ -1,5 +1,6 @@
 package com.handel.geo.service;
 
+import com.handel.geo.model.Users;
 import com.handel.geo.repository.LocatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -7,8 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.handel.geo.repository.RoleRepository;
 import com.handel.geo.repository.UsersRepository;
+import org.thymeleaf.expression.Strings;
 
 import javax.sql.DataSource;
+import java.util.UUID;
 
 @Component
 public class test implements CommandLineRunner {
@@ -29,6 +32,9 @@ public class test implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println(bCryptPasswordEncoder.encode("a"));
         System.out.println(bCryptPasswordEncoder.encode("b"));
+        Users usr = new Users();
+        System.out.println(usr.getRoles());
+//        System.out.println("string random "+ UUID.randomUUID().toString());
 //        bCryptPasswordEncoder.
 
 //        System.out.println("role"+ usersRepository.findAllUsers());

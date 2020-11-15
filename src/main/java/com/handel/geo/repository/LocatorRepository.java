@@ -28,7 +28,7 @@ public interface LocatorRepository extends CrudRepository<Locator, Integer>
     @Transactional
     @Modifying
     @Query("delete from Locator l where l.id=:id")
-    void deleteLocatorById(@Param("id") String id);
+    void deleteLocatorById(@Param("id") Long id);
 
 
     @Query(value = "select * from LOCATOR l where l.id=:id", nativeQuery = true)

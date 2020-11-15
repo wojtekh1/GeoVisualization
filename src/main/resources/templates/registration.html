@@ -49,24 +49,25 @@
                         </div>
                     </div>
 
-<!--                    <div class="form-group">-->
-<!--                        <h6 class="font-weight-bold">Prawa użytkownika:</h6>-->
-<!--                        <div  class="col-12" th:if="${#request.getUserPrincipal() != null && #request.getUserPrincipal().toString().contains('ADMIN')}">-->
-<!--                            <select class="custom-select"  th:field="*{roles}" multiple="multiple">-->
-<!--                                <option th:each="role,roleStat : ${role}" th:value="${role.roleId}"-->
-<!--                                        th:text="${role.type}">Wireframe-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                        </div>-->
+                    <div class="form-group">
+                        <h6 class="font-weight-bold">Prawa użytkownika:</h6>
+                        <div  class="col-12" th:if="${#request.getUserPrincipal() != null && #request.getUserPrincipal().toString().contains('ADMIN')}">
+                            <select class="custom-select"  th:field="*{roles}" multiple="multiple">
+                                <option th:each="role,roleStat : ${availableRole}" th:value="${role.roleId}"
+                                        th:text="${role.role}">Wireframe
+                                </option>
+                            </select>
+                        </div>
+                        <input type="hidden" th:field="*{roles}"/>
 <!--                        <div class="col-12" th:if="${#request.getUserPrincipal() == null || #request.getUserPrincipal().toString().contains('USER')}">-->
 <!--                            <select class="form-control"  th:field="*{roles}" multiple="multiple">-->
-<!--                                <option th:each="role,roleStat : ${role}" th:value="${role.roleId}"-->
-<!--                                        th:text="${role.type}">Wireframe-->
+<!--                                <option th:each="role,roleStat : ${availableRole}" th:value="${role.roleId}"-->
+<!--                                        th:text="${role.role}">Wireframe-->
 <!--                                </option>-->
 <!--                            </select>-->
 <!--                            <span class="text-danger" th:utext="${errorRoles}"></span>-->
 <!--                        </div>-->
-<!--                    </div>-->
+                    </div>
 
                     <div class="form-group">
                         <div class="col-12">

@@ -55,6 +55,8 @@
                     <div class="d-flex">
                         <input type="hidden" th:field="*{user}"/>
                         <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{apiKey}"/>
+                        <input type="hidden" th:field="*{modyficationDate}"/>
                         <div class="mr-auto ml-2" th:text="${locator.user.getEmail()}"></div>
                         <div class="ml-auto mr-2" th:text="${#temporals.format(locator.modyficationDate, 'dd-MM-yyyy HH:mm')}"></div>
                     </div>

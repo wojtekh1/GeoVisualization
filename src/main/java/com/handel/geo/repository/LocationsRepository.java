@@ -24,6 +24,11 @@ public interface LocationsRepository extends CrudRepository<Location, Integer>
     @Query("delete from Location l where l.id=:id")
     void deleteLocationById(@Param("id") Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Location l where l.locator=:locator", nativeQuery = true)
+    void deleteAllLocatorLocation(@Param("locator") Locator locator);
+
     @Query(value = "select * from LOCATION l where l.id=:id", nativeQuery = true)
     Location getLocationById(@Param("id") Integer id);
 
@@ -40,6 +45,8 @@ public interface LocationsRepository extends CrudRepository<Location, Integer>
 
     @Query(value = "select l.* from LOCATION l where l.LOCATOR in(:locatorId) and l.DATE_TIME between :fromDate and :toDate", nativeQuery = true)
     ArrayList<Location> getLocatorLocationsByDate(@Param("locatorId") Long locatorId, @Param("fromDate") LocalDateTime from,@Param("toDate")  LocalDateTime to);
+
+
 
 //    @Query(value = "select * from LOCATION l where l.USER_ID=:userId order by DATE_TIME", nativeQuery = true)
 //    ArrayList<Location> getLocationsByUserAndDates(@Param("userId") Integer userId);

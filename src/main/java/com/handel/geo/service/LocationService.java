@@ -31,6 +31,9 @@ public class LocationService {
     @Autowired
     private LocatorRepository locatorRepository;
 
+    @Autowired
+    private LocatorService locatorService;
+
 //    public Locator saveLocation(Locator locator){
 //        return locationsRepository.save(locatoions);
 //    }
@@ -58,6 +61,10 @@ public class LocationService {
         locationsRepository.deleteLocationById(id);
     }
 
+    public void deleteAllLocatorLocation(Long id) {
+        Locator locator = locatorService.getLocator(id);
+        locationsRepository.deleteAllLocatorLocation(locator); 
+    }
     public Location getLocator(Integer id) {
         return locationsRepository.getLocationById(id);
     }
@@ -89,6 +96,16 @@ public class LocationService {
             return locationsRepository.save(location);
         }
     }
+    public boolean checkAccess(Location location, String authName) {
+        Locator locator=locatorService.getLocatorByApiKey(location.getLocator().getApiKey());
+        if (locator.getUser().getEmail()==authName){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 
 
 //    @EventListener(ApplicationReadyEvent.class)

@@ -86,31 +86,29 @@
 <!--            <h1>Witam</h1>-->
 <!--            <p th:text="${lastLocatorsLocations}"></p>-->
 <!--                <p th:text="${range.getDateTimeTo().toString().substring(0,16)}"></p>-->
-            <div th:if="${#request.getUserPrincipal() != null}">
-                <div id="filter" class="row">
-                    <div class="form-group col-md-6 d-flex justify-content-center px-2  mb-2">
+            <div id="filter" class="row" th:if="${#request.getUserPrincipal() != null}">
+                <div class="form-group col-sm-5 d-flex justify-content-center px-2  mb-2">
 <!--                        <p th:text="*{range.dateTimeFrom}"></p>-->
 <!--                        <p th:text="*{range.dateTimeTo}"></p>-->
-                        <div class="d-inline-block">
-                            <label class="" for="date_from">Data od:</label>
+                    <div class="">
+                        <label class="" for="date_from">Data od:</label>
 <!--                            <input th:field="*{range.dateTimeFrom}" type="datetime-local" class="form-control p-1" id="date_from0" name="date_from" >-->
 <!--                            <input th:field="*{range.dateTimeFrom.toString().substring(0,16)}" type="datetime-local" class="form-control p-1" id="date_from2" name="date_from">-->
-                            <input type="datetime-local" class="form-control p-1" id="date_from" name="date_from" th:value="${range.getDateTimeFrom().toString().substring(0,16)}">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-5 d-flex justify-content-center px-2 mb-2">
-                        <div class="d-inline-block">
-                            <label for="date_to">Data do:</label>
-                            <input type="datetime-local" class="form-control p-1" id="date_to" name="date_to" th:value="${range.getDateTimeTo().toString().substring(0,16)}">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-1 d-flex justify-content-center mb-2">
-                        <button type="button" onclick="filter()" class="btn btn-dark my-auto">Filtruj</button>
+                        <input type="datetime-local" class="form-control p-1" id="date_from" name="date_from" th:value="${range.getDateTimeFrom().toString().substring(0,16)}">
                     </div>
                 </div>
+                <div class="form-group col-sm-5 d-flex justify-content-center px-2 mb-2">
+                    <div class="">
+                        <label for="date_to">Data do:</label>
+                        <input type="datetime-local" class="form-control p-1" id="date_to" name="date_to" th:value="${range.getDateTimeTo().toString().substring(0,16)}">
+                    </div>
+                </div>
+
+                <div class="col-sm-2 d-flex justify-content-center mb-2">
+                    <button type="button" onclick="filter()" class="btn btn-dark my-auto">Filtruj</button>
+                </div>
             </div>
-            <div class="m-2 p-2 border rounded margin-border">
+            <div class="border rounded margin-border">
                 <div id="mapid"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
                     <div class="leaflet-control-container">
@@ -135,15 +133,14 @@
     <div th:replace="fragments/footer :: footer"></div>
 </div>
 <script th:inline="javascript">
-
     function sizing() {
         if(window.innerWidth < 768) {
-            document.getElementById("margin-top").setAttribute("style","margin-top: 15px" );
+            document.getElementById("margin-top").setAttribute("style","margin-top: 0px" );
             document.getElementById("sidebar-l").removeAttribute("style");
             $("#mapid").height($(document).height()-$("#sidebar-l").height()-$("#filter").height()-27-100);
             if($("#mapid").height()<250){ $("#mapid").height(250) }
         }else{
-            document.getElementById("margin-top").setAttribute("style","margin-top: 90px" );
+            document.getElementById("margin-top").setAttribute("style","margin-top: 80px" );
             $("#sidebar-l").height($(document).height()-24);
             $("#mapid").height($(document).height()-$("#filter").height()-211);
             if($("#mapid").height()<250){ $("#mapid").height(250) }
@@ -152,14 +149,15 @@
     sizing();
     var locations = [[${allLocatorLocations}]];
     var latLngs = [];
-    locations.forEach(n => latLngs.push([n.fi, n.lambda]));
-    var lastLocations = [];
-    lastLocations[0] = locations[locations.length-1];
-    var lastLatLngs = [];
-    lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda,n.locator.name]));
-    var tooltip = [];
-    locations.forEach(n => tooltip.push([n.fi, n.lambda,n.date_time]));
-
+    if (locations.length>0) {
+        locations.forEach(n => latLngs.push([n.fi, n.lambda]));
+        var lastLocations = [];
+        lastLocations[0] = locations[locations.length - 1];
+        var lastLatLngs = [];
+        lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda, n.locator.name]));
+        var tooltip = [];
+        locations.forEach(n => tooltip.push([n.fi, n.lambda, n.date_time]));
+    }
     proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
     var crs = new L.Proj.CRS(
         "EPSG:2180",
@@ -230,62 +228,45 @@
     // }
     // map.on('click', onMapClick);
 
-    var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
-                            iconAnchor: [18, 51] });
-    lastCircleMarker = [];
-    lastMarker = [];
-    lastLatLngs.forEach(value => {
-        lastMarker.push(L.marker(value, {icon: myIcon}).addTo(map));
-        lastCircleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0.6, fillOpacity: 0.3}));
-        lastMarker[lastMarker.length-1].bindTooltip(value[2], {direction:'top', offset: [0,-51], permanent: true,color: "#ff9300"});
+    if(locations.length>0){
+        var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
+                                iconAnchor: [18, 51] });
+        lastCircleMarker = [];
+        lastMarker = [];
+        lastLatLngs.forEach(value => {
+            lastMarker.push(L.marker(value, {icon: myIcon}).addTo(map));
+            lastCircleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0.6, fillOpacity: 0.3}));
+            lastMarker[lastMarker.length-1].bindTooltip(value[2], {direction:'top', offset: [0,-51], permanent: true,color: "#ff9300"});
+            });
+
+        circleMarker = [];
+        tooltip.forEach(value => {
+            circleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0, fillOpacity: 0.5, radius: 5,color: "#ff9300"}));
+        });
+        circleMarker.forEach((value,index) => {
+            value.bindTooltip("<p style=\"text-align:center; margin: 0px\">"+tooltip[index][2].replace("T","<br>").substr(0,22) + "</p>", {direction:'top', offset: [0,0]});
         });
 
-    circleMarker = [];
-    tooltip.forEach(value => {
-        circleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0, fillOpacity: 0.5, radius: 5,color: "#ff9300"}));
-    });
-    circleMarker.forEach((value,index) => {
-        value.bindTooltip("<p style=\"text-align:center; margin: 0px\">"+tooltip[index][2].replace("T","<br>").substr(0,22) + "</p>", {direction:'top', offset: [0,0]});
-    });
-
-    //         zoom the map to the center and markers
-    // map.setView([52, 19], 6);
-    L.control.scale().addTo(map);
-    var polyline = L.polyline(latLngs, {
-        color: "#ff9300",
-        opacity: 0.8
-    });
-    if (latLngs.length != 0) {
-        var markerPolyline = L.polyline(latLngs);
-        map.fitBounds(markerPolyline.getBounds());
-
-        // function myFlyTo(bounds) {
-        //     // setTimeout(function(){
-        //     alert("Hello!");
-        //     // map.stop();
-        //     // setTimeout(function(){map.flyToBounds(bounds)},1000);
-        //     // });
-        // };
-        // var interval = setInterval(myFlyTo(polyline.getBounds()), 2000);
-
-
-        // setInterval(function(){
-        //     map.stop();
-        //     setTimeout(function(){
-        //         map.flyToBounds(markerPolyline.getBounds());
-        //     }, 5);
-        // }, 1000);
-
-        // function stopFlyTo() {
-        //     setTimeout(function(){clearInterval(myVar)}, 5000);
-        // }
-    };
-    setTimeout(function(){
-        polyline.addTo(map);
-        if (lastCircleMarker.length>0) lastCircleMarker[0].addTo(map);
-        if (circleMarker.length>0) circleMarker.forEach(value => value.addTo(map));
-        },2000);
-    map.viewreset;
+        //         zoom the map to the center and markers
+        // map.setView([52, 19], 6);
+        L.control.scale().addTo(map);
+        var polyline = L.polyline(latLngs, {
+            color: "#ff9300",
+            opacity: 0.8
+        });
+        if (latLngs.length != 0) {
+            var markerPolyline = L.polyline(latLngs);
+            map.fitBounds(markerPolyline.getBounds());
+        };
+        setTimeout(function(){
+            polyline.addTo(map);
+            if (lastCircleMarker.length>0) lastCircleMarker[0].addTo(map);
+            if (circleMarker.length>0) circleMarker.forEach(value => value.addTo(map));
+            },2000);
+        map.viewreset;
+    }else{
+        map.setView([52, 19], 6);
+    }
 
     function filter() {
         arr = window.location.href.split('/');

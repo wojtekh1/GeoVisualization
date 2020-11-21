@@ -29,16 +29,10 @@ public class HomeController {
     public ModelAndView home() {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         Locator locator = new Locator();
-//        System.out.println(authName.equals("anonymousUser"));
         System.out.println(authName);
         System.out.println(locator.getUser());
-//        if(!authName.equals("anonymousUser")) {
-            List<Locator> allUserLocators;
-            allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
-//        }else
-//        {
-//            List<Locator> allUserLocators=new ArrayList<>
-//        }
+        List<Locator> allUserLocators;
+        allUserLocators = locatorService.getAllUserLocators(userService.findUserIdByEmail(authName));
         List<Location> allUserLocations;
         List<Location> lastLocatorsLocations;
         Integer userId = userService.findUserIdByEmail(authName);

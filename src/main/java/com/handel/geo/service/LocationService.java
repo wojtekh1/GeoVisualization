@@ -104,17 +104,4 @@ public class LocationService {
             return false;
         }
     }
-
-
-
-
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void fillTestData() {
-//        saveLocation(new Location(52.162523f,21.044935f,130,0,LocalDateTime.of(2020, 10,14,12,18,06,82),locatorRepository.getLocatorById(1L)));
-//        saveLocation(new Location(52.161813f,21.043848f,131,0,LocalDateTime.of(2020, 10,14,12,19,06,82),locatorRepository.getLocatorById(1L)));
-//        saveLocation(new Location(52.159648f,21.045994f,129,0,LocalDateTime.of(2020, 10,14,12,20,06,82),locatorRepository.getLocatorById(1L)));
-//        saveLocation(new Location(52.182523f,21.034935f,130,0,LocalDateTime.of(2020, 10,14,12,18,06,82),locatorRepository.getLocatorById(2L)));
-//        saveLocation(new Location(52.181813f,21.033848f,131,0,LocalDateTime.of(2020, 10,14,12,19,06,82),locatorRepository.getLocatorById(2L)));
-//        saveLocation(new Location(52.169648f,21.035994f,129,0,LocalDateTime.of(2020, 10,14,12,20,06,82),locatorRepository.getLocatorById(2L)));
-//    }
 }

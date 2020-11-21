@@ -14,12 +14,6 @@ import java.util.List;
 @Service
 public class RoleService {
 
-//    @Autowired
-//    UserService userService;
-//    @Autowired
-//    LocatorService locatorService;
-//    @Autowired
-//    LocationService locationService;
     @Qualifier("roleRepository")
     @Autowired
     RoleRepository roleRepository;

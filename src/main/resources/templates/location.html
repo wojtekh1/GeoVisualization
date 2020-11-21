@@ -46,19 +46,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 -->
 
-
-<!--    <script th:inline="javascript">-->
-<!--        function loadLocations() {-->
-<!--            var locations = [[${allUserLocations}]];-->
-<!--            var latLngs = [];-->
-<!--            if (locations != []) locations.forEach(n => latLngs.push([n.fi, n.lambda]));-->
-
-<!--            var lastLocations = [[${lastLocatorsLocations}]];-->
-<!--            var lastLatLngs = [];-->
-<!--            if (lastLocations != []) locations.forEach(n => lastLatLngs.push([n.fi, n.lambda]));-->
-<!--        }-->
-<!--    </script>-->
-
 </head>
 <body class="bg-body" onresize="sizing()" onload="sizing()">
 <!--<body class="bg-body">-->
@@ -77,23 +64,12 @@
                 </a>
             </ul>
         </div>
-<!--
-        <div class="col-md-1 col-sm-12">
-        </div>
--->
         <div class="col-md-9 col-sm-12" style="height: 70%">
             <div id="margin-top" style="margin-top: 90px" class="bar-color"></div>
-<!--            <h1>Witam</h1>-->
-<!--            <p th:text="${lastLocatorsLocations}"></p>-->
-<!--                <p th:text="${range.getDateTimeTo().toString().substring(0,16)}"></p>-->
             <div id="filter" class="row" th:if="${#request.getUserPrincipal() != null}">
                 <div class="form-group col-sm-5 d-flex justify-content-center px-2  mb-2">
-<!--                        <p th:text="*{range.dateTimeFrom}"></p>-->
-<!--                        <p th:text="*{range.dateTimeTo}"></p>-->
                     <div class="">
                         <label class="" for="date_from">Data od:</label>
-<!--                            <input th:field="*{range.dateTimeFrom}" type="datetime-local" class="form-control p-1" id="date_from0" name="date_from" >-->
-<!--                            <input th:field="*{range.dateTimeFrom.toString().substring(0,16)}" type="datetime-local" class="form-control p-1" id="date_from2" name="date_from">-->
                         <input type="datetime-local" class="form-control p-1" id="date_from" name="date_from" th:value="${range.getDateTimeFrom().toString().substring(0,16)}">
                     </div>
                 </div>
@@ -128,7 +104,6 @@
             </div>
         </div>
     </div>
-<!--    <div style="margin-bottom: 27px"></div>-->
     <br>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
@@ -219,14 +194,6 @@
     layerControl = L.control.layers(baseMaps).addTo(map);
     map.removeLayer(orto);
     map.removeLayer(bdot500);
-    // var popup = L.popup();
-    // function onMapClick(e) {
-    //     popup
-    //         .setLatLng(e.latlng)
-    //         .setContent(e.latlng.toString())
-    //         .openOn(map);
-    // }
-    // map.on('click', onMapClick);
 
     if(locations.length>0){
         var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
@@ -247,8 +214,6 @@
             value.bindTooltip("<p style=\"text-align:center; margin: 0px\">"+tooltip[index][2].replace("T","<br>").substr(0,22) + "</p>", {direction:'top', offset: [0,0]});
         });
 
-        //         zoom the map to the center and markers
-        // map.setView([52, 19], 6);
         L.control.scale().addTo(map);
         var polyline = L.polyline(latLngs, {
             color: "#ff9300",

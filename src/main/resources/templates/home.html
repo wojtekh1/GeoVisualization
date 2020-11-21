@@ -47,7 +47,6 @@
 -->
     
 </head>
-<!--<body onload="loadLocations()" class="bg-body">-->
 <body class="bg-body" onresize="sizing()" onload="sizing()">
 
 <div class="container-fluid" style="height: 100%">
@@ -55,7 +54,6 @@
     <div th:replace="fragments/header :: header"></div>
     </div>
     <div class="row bg-body">
-<!--    <div class="row bg-body" style="height: 100%">-->
         <div id="sidebar-l" class="col-md-3 col-sm-12 p-0 bar-color">
             <div style="margin-top: 90px" class="bar-color"></div>
             <ul th:if="${#request.getUserPrincipal() != null}" class="sidebar accordion p-2" id="accordionSidebar">
@@ -66,14 +64,8 @@
                 </a>
             </ul>
         </div>
-<!--
-        <div class="col-md-1 col-sm-12">
-        </div>
--->
         <div class="col-md-9 col-sm-12" style="height: 70%">
             <div id="margin-top" style="margin-top: 90px" class="bar-color"></div>
-<!--            <h1>Witam</h1>-->
-<!--            <p th:text="${lastLocatorsLocations}"></p>-->
             <div class=" border rounded margin-border">
                 <div id="mapid"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
@@ -94,7 +86,6 @@
             </div>
         </div>
     </div>
-<!--    <div style="margin-bottom: 27px"></div>-->
     <br>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
@@ -151,15 +142,6 @@
         minZoom: 5,
         maxZoom: 19
     });
-    // var orto = L.tileLayer.wms("http://mapy.geoportal.gov.pl/wss/service/img/guest/ORTO/MapServer/WMSServer",
-    //     {   layers:"Raster",
-    //         format: 'image/png',
-    //         transparent : 'true',
-    //         version : '1.1.1',
-    //         minZoom: 5,
-    //         maxZoom: 19
-    //         // tileSize: 512
-    //     });
 
     //        example 4 BDOT GEOPORTAL
     var bdot500 = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {
@@ -205,7 +187,6 @@
                 +lastLatLngs[index][2].split("&")[1]); }
         })
     }
-
 
     var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
                             iconAnchor: [18, 51] });

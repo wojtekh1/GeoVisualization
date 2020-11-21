@@ -23,11 +23,6 @@ public class DateTimeRange {
         this.to = to;
     }
 
-    //    String dateFrom=from.toString().substring(0,10);
-//    String dateTo=to.toString().substring(0,10);
-//    String timeFrom=from.toString().substring(11,16);
-//    String timeTo=to.toString().substring(11,16);
-
     public LocalDateTime getDateTimeFrom() {
         return from;
     }

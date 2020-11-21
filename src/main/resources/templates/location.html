@@ -59,23 +59,15 @@
 <!--        }-->
 <!--    </script>-->
 
-    <script>
-
-        function height() {
-            return document.body.scrollHeight;
-        }
-
-
-    </script>
 </head>
-<body onload="height()" class="bg-body">
+<body class="bg-body" onresize="sizing()" onload="sizing()">
 <!--<body class="bg-body">-->
 
 <div class="container-fluid" style="height: 100%">
 
     <div th:replace="fragments/header :: header"></div>
-    <div class="row bg-body" style="height: 100%">
-        <div class="col-md-3 col-sm-12 p-0 bar-color">
+    <div class="row bg-body">
+        <div id="sidebar-l" class="col-md-3 col-sm-12 p-0 bar-color">
             <div style="margin-top: 90px" class="bar-color"></div>
             <ul class="sidebar accordion p-2" id="accordionSidebar">
                 <a class="d-flex align-items-center justify-content-center text-white"
@@ -90,12 +82,12 @@
         </div>
 -->
         <div class="col-md-9 col-sm-12" style="height: 70%">
-            <div style="margin-top: 80px" class="bar-color"></div>
+            <div id="margin-top" style="margin-top: 90px" class="bar-color"></div>
 <!--            <h1>Witam</h1>-->
 <!--            <p th:text="${lastLocatorsLocations}"></p>-->
 <!--                <p th:text="${range.getDateTimeTo().toString().substring(0,16)}"></p>-->
             <div th:if="${#request.getUserPrincipal() != null}">
-                <div class="row">
+                <div id="filter" class="row">
                     <div class="form-group col-md-6 d-flex justify-content-center px-2  mb-2">
 <!--                        <p th:text="*{range.dateTimeFrom}"></p>-->
 <!--                        <p th:text="*{range.dateTimeTo}"></p>-->
@@ -118,8 +110,8 @@
                     </div>
                 </div>
             </div>
-            <div class="m-2 p-2 border rounded">
-                <div id="mapid" style="position: relative;"
+            <div class="m-2 p-2 border rounded margin-border">
+                <div id="mapid"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
                     <div class="leaflet-control-container">
                         <div class="leaflet-top leaflet-left">
@@ -142,8 +134,22 @@
     <br>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
-
 <script th:inline="javascript">
+
+    function sizing() {
+        if(window.innerWidth < 768) {
+            document.getElementById("margin-top").setAttribute("style","margin-top: 15px" );
+            document.getElementById("sidebar-l").removeAttribute("style");
+            $("#mapid").height($(document).height()-$("#sidebar-l").height()-$("#filter").height()-27-100);
+            if($("#mapid").height()<250){ $("#mapid").height(250) }
+        }else{
+            document.getElementById("margin-top").setAttribute("style","margin-top: 90px" );
+            $("#sidebar-l").height($(document).height()-24);
+            $("#mapid").height($(document).height()-$("#filter").height()-211);
+            if($("#mapid").height()<250){ $("#mapid").height(250) }
+        }
+    };
+    sizing();
     var locations = [[${allLocatorLocations}]];
     var latLngs = [];
     locations.forEach(n => latLngs.push([n.fi, n.lambda]));

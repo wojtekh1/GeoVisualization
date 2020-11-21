@@ -29,9 +29,6 @@ body {
 .bar-color{
     background-color:#343a40;
 }
-.top-margin{
-    margin-top: 90px;
-}
 
 .marker-color{
     color: #ff9300;
@@ -40,7 +37,6 @@ body {
 
 #mapid {
     height: 100px;
-
 }
 .margin-border {
     margin-bottom: 27px;

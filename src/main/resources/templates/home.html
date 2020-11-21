@@ -58,7 +58,7 @@
 <!--    <div class="row bg-body" style="height: 100%">-->
         <div id="sidebar-l" class="col-md-3 col-sm-12 p-0 bar-color">
             <div style="margin-top: 90px" class="bar-color"></div>
-            <ul class="sidebar accordion p-2" id="accordionSidebar">
+            <ul th:if="${#request.getUserPrincipal() != null}" class="sidebar accordion p-2" id="accordionSidebar">
                 <a class="d-flex align-items-center justify-content-center text-white"
                    th:each="locator : ${allUserLocators}" th:href="${'/location/'+locator.id}" >
                     <i class="fas fa-map-marker"></i>
@@ -103,16 +103,14 @@
     function sizing() {
         if(window.innerWidth < 768) {
             document.getElementById("margin-top").setAttribute("style","margin-top: 15px" );
-            document.getElementById("sidebar-l").removeAttribute("style")
+            document.getElementById("sidebar-l").removeAttribute("style");
+            $("#mapid").height($(document).height()-$("#sidebar-l").height()-27-100);
         }else{
             document.getElementById("margin-top").setAttribute("style","margin-top: 90px" );
             $("#sidebar-l").height($(document).height()-24);
+            $("#mapid").height($(document).height()-211);
         }
-
-        $("#mapid").height($(document).height()-211);
-
-        map.viewreset;
-    }
+    };
     $("#mapid").height($(document).height()-211);
     var locations = [[${allUserLocations}]];
     var latLngs = [];
@@ -192,13 +190,14 @@
     layerControl = L.control.layers(baseMaps).addTo(map);
     map.removeLayer(orto);
     map.removeLayer(bdot500);
-    var popup = L.popup();
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(map);
-    }
+    // var popup = L.popup();
+    // function onMapClick(e) {
+    //     popup
+    //         .setLatLng(e.latlng)
+    //         .setContent(e.latlng.toString())
+    //         .openOn(map);
+    // }
+    // map.on('click', onMapClick);
     function onMarkerClick(e){
         lastMarker.forEach((value,index) => {
             if(value._leaflet_id == e.target._leaflet_id) {
@@ -206,7 +205,7 @@
                 +lastLatLngs[index][2].split("&")[1]); }
         })
     }
-    map.on('click', onMapClick);
+
 
     var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
                             iconAnchor: [18, 51] });

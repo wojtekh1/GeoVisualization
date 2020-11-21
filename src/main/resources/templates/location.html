@@ -58,16 +58,25 @@
 <!--            if (lastLocations != []) locations.forEach(n => lastLatLngs.push([n.fi, n.lambda]));-->
 <!--        }-->
 <!--    </script>-->
+
+    <script>
+
+        function height() {
+            return document.body.scrollHeight;
+        }
+
+
+    </script>
 </head>
-<!--<body onload="loadLocations()" class="bg-body">-->
-<body class="bg-body">
+<body onload="height()" class="bg-body">
+<!--<body class="bg-body">-->
 
 <div class="container-fluid" style="height: 100%">
 
     <div th:replace="fragments/header :: header"></div>
     <div class="row bg-body" style="height: 100%">
         <div class="col-md-3 col-sm-12 p-0 bar-color">
-            <div style="margin-top: 80px" class="bar-color"></div>
+            <div style="margin-top: 90px" class="bar-color"></div>
             <ul class="sidebar accordion p-2" id="accordionSidebar">
                 <a class="d-flex align-items-center justify-content-center text-white"
                    th:each="locator : ${allUserLocators}" th:href="${'/location/'+locator.id}" >
@@ -142,6 +151,8 @@
     lastLocations[0] = locations[locations.length-1];
     var lastLatLngs = [];
     lastLocations.forEach(n => lastLatLngs.push([n.fi, n.lambda,n.locator.name]));
+    var tooltip = [];
+    locations.forEach(n => tooltip.push([n.fi, n.lambda,n.date_time]));
 
     proj4.defs('EPSG:2180', '+proj=tmerc +lat_0=0 +lon_0=19 +k=0.9993 +x_0=500000 +y_0=-5300000 +ellps=GRS80 +units=m +no_defs');
     var crs = new L.Proj.CRS(
@@ -204,14 +215,14 @@
     layerControl = L.control.layers(baseMaps).addTo(map);
     map.removeLayer(orto);
     map.removeLayer(bdot500);
-    var popup = L.popup();
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent(e.latlng.toString())
-            .openOn(map);
-    }
-    map.on('click', onMapClick);
+    // var popup = L.popup();
+    // function onMapClick(e) {
+    //     popup
+    //         .setLatLng(e.latlng)
+    //         .setContent(e.latlng.toString())
+    //         .openOn(map);
+    // }
+    // map.on('click', onMapClick);
 
     var myIcon = L.divIcon({className: 'fas fa-map-marker-alt fa-4x marker-color',
                             iconAnchor: [18, 51] });
@@ -220,8 +231,16 @@
     lastLatLngs.forEach(value => {
         lastMarker.push(L.marker(value, {icon: myIcon}).addTo(map));
         lastCircleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0.6, fillOpacity: 0.3}));
-        lastMarker[lastMarker.length-1].bindTooltip(value[2], {direction:'top', offset: [0,-51], permanent: true});
+        lastMarker[lastMarker.length-1].bindTooltip(value[2], {direction:'top', offset: [0,-51], permanent: true,color: "#ff9300"});
         });
+
+    circleMarker = [];
+    tooltip.forEach(value => {
+        circleMarker.push(L.circleMarker(value,{stroke: true, opacity: 0, fillOpacity: 0.5, radius: 5,color: "#ff9300"}));
+    });
+    circleMarker.forEach((value,index) => {
+        value.bindTooltip("<p style=\"text-align:center; margin: 0px\">"+tooltip[index][2].replace("T","<br>").substr(0,22) + "</p>", {direction:'top', offset: [0,0]});
+    });
 
     //         zoom the map to the center and markers
     // map.setView([52, 19], 6);
@@ -258,6 +277,7 @@
     setTimeout(function(){
         polyline.addTo(map);
         if (lastCircleMarker.length>0) lastCircleMarker[0].addTo(map);
+        if (circleMarker.length>0) circleMarker.forEach(value => value.addTo(map));
         },2000);
     map.viewreset;
 

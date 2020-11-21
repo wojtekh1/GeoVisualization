@@ -48,14 +48,16 @@
     
 </head>
 <!--<body onload="loadLocations()" class="bg-body">-->
-<body class="bg-body">
+<body class="bg-body" onresize="sizing()" onload="sizing()">
 
 <div class="container-fluid" style="height: 100%">
-
+    <div class="row">
     <div th:replace="fragments/header :: header"></div>
-    <div class="row bg-body" style="height: 100%">
-        <div class="col-md-3 col-sm-12 p-0 bar-color">
-            <div style="margin-top: 80px" class="bar-color"></div>
+    </div>
+    <div class="row bg-body">
+<!--    <div class="row bg-body" style="height: 100%">-->
+        <div id="sidebar-l" class="col-md-3 col-sm-12 p-0 bar-color">
+            <div style="margin-top: 90px" class="bar-color"></div>
             <ul class="sidebar accordion p-2" id="accordionSidebar">
                 <a class="d-flex align-items-center justify-content-center text-white"
                    th:each="locator : ${allUserLocators}" th:href="${'/location/'+locator.id}" >
@@ -69,11 +71,11 @@
         </div>
 -->
         <div class="col-md-9 col-sm-12" style="height: 70%">
-            <div style="margin-top: 80px" class="bar-color"></div>
+            <div id="margin-top" style="margin-top: 90px" class="bar-color"></div>
 <!--            <h1>Witam</h1>-->
 <!--            <p th:text="${lastLocatorsLocations}"></p>-->
-            <div class=" border rounded">
-                <div id="mapid" style="position: relative;"
+            <div class=" border rounded margin-border">
+                <div id="mapid"
                      class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0">
                     <div class="leaflet-control-container">
                         <div class="leaflet-top leaflet-left">
@@ -97,6 +99,21 @@
     <div th:replace="fragments/footer :: footer"></div>
 </div>
 <script th:inline="javascript">
+
+    function sizing() {
+        if(window.innerWidth < 768) {
+            document.getElementById("margin-top").setAttribute("style","margin-top: 15px" );
+            document.getElementById("sidebar-l").removeAttribute("style")
+        }else{
+            document.getElementById("margin-top").setAttribute("style","margin-top: 90px" );
+            $("#sidebar-l").height($(document).height()-24);
+        }
+
+        $("#mapid").height($(document).height()-211);
+
+        map.viewreset;
+    }
+    $("#mapid").height($(document).height()-211);
     var locations = [[${allUserLocations}]];
     var latLngs = [];
     locations.forEach(n => latLngs.push([n.fi, n.lambda]));
@@ -210,7 +227,6 @@
         map.flyToBounds(markerPolyline.getBounds());
     };
     map.viewreset;
-
 </script>
 
 

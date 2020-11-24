@@ -76,10 +76,6 @@
                         <div class="leaflet-bottom leaflet-left"></div>
                         <div class="leaflet-bottom leaflet-right">
                             <div class="leaflet-control-attribution leaflet-control">
-                                <a href="https://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a>
-                                | Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
-                                contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,
-                                Imagery © <a href="https://www.mapbox.com/">Mapbox</a></div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +125,7 @@
 
            // example 3 ORTO GEOPORTAL  https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO
     var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/ORTO', {
+        attribution: '<a href="https://mapy.geoportal.gov.pl/">geoportal.gov.pl</a>',
         format: 'image/png',
         tileSize: 512,
         version: '1.1.1',
@@ -145,18 +142,19 @@
 
     //        example 4 BDOT GEOPORTAL
     var bdot500 = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {
-       format: 'image/png',
-       // tileSize: 512,
-       version: '1.0.0',
-       transparent: true,
-       crs: crs,
-       origin: [850000.0, 100000.0],
-       scales: [30238155.714285716, 15119077.857142858, 7559538.928571429, 3779769.4642857146, 1889884.7321428573, 944942.3660714286, 472471.1830357143, 236235.59151785716, 94494.23660714286, 47247.11830357143, 23623.559151785714, 9449.423660714287, 4724.711830357143, 1889.8847321428573, 944.9423660714286, 472.4711830357143],
-       tilematrixSet: 'EPSG:2180',
-       opacity: 1.0,
-       crossOrigin: true,
-       minZoom: 5,
-       maxZoom: 19
+        attribution: '<a href="https://mapy.geoportal.gov.pl/">geoportal.gov.pl</a>',
+        format: 'image/png',
+        // tileSize: 512,
+        version: '1.0.0',
+        transparent: true,
+        crs: crs,
+        origin: [850000.0, 100000.0],
+        scales: [30238155.714285716, 15119077.857142858, 7559538.928571429, 3779769.4642857146, 1889884.7321428573, 944942.3660714286, 472471.1830357143, 236235.59151785716, 94494.23660714286, 47247.11830357143, 23623.559151785714, 9449.423660714287, 4724.711830357143, 1889.8847321428573, 944.9423660714286, 472.4711830357143],
+        tilematrixSet: 'EPSG:2180',
+        opacity: 1.0,
+        crossOrigin: true,
+        minZoom: 5,
+        maxZoom: 19
     })
     var map = L.map('mapid',{
         // center: [52, 19],

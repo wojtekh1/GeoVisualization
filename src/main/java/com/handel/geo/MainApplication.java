@@ -11,5 +11,5 @@ public class MainApplication {
         SpringApplication.run(MainApplication.class, args);
     }
 
-    test test1 = new test();
+//    test test1 = new test();
 }

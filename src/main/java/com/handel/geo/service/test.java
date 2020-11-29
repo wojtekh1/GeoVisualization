@@ -4,6 +4,7 @@ import com.handel.geo.model.Users;
 import com.handel.geo.repository.LocatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.handel.geo.repository.RoleRepository;
@@ -34,6 +35,7 @@ public class test implements CommandLineRunner {
         System.out.println(bCryptPasswordEncoder.encode("b"));
         Users usr = new Users();
         System.out.println(usr.getRoles());
+        System.out.println(new FileSystemResource("").getFile().getAbsolutePath());
 //        System.out.println("string random "+ UUID.randomUUID().toString());
 //        bCryptPasswordEncoder.
 

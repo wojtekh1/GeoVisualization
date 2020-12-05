@@ -104,4 +104,18 @@ public class LocatorsController {
         modelAndView.setViewName("redirect:/locators");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
+    public ModelAndView testLocator(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Locator locator = locatorService.getLocator(id);
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (locatorService.checkAccess(locator.getApiKey(),authName)) {
+            modelAndView.addObject("locator", locator);
+            modelAndView.setViewName("testLocator");
+        }else {
+            modelAndView.setViewName("access-denied");
+        };
+        return modelAndView;
+    }
 }

@@ -83,7 +83,8 @@ public class LocationService {
     }
     public Location saveLocation(Location location){
         long between = ChronoUnit.MINUTES.between(LocalDateTime.now(),location.getDate_time());
-        if(0<between || between<-(24*60)){
+        System.out.println("odstęp minutowy " + between);
+        if((60<between) || (between<(-24*60))){
             location.setDate_time(null);
             return location;
         }if (location.getFi()<-90 || location.getFi()>90){

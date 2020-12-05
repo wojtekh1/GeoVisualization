@@ -1,1 +1,1 @@
-web: java -cp target/classes;target/dependency/* com.handel.geo.MainApplication
+web: java $JAVA_OPTS -jar target/*.war --port $PORT

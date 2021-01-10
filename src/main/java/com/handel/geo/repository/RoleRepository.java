@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repozytorium ról użytkowników
+ */
 @Repository("roleRepository")
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 

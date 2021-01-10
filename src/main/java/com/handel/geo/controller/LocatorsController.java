@@ -17,6 +17,9 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Kontroler stron związanych z lokalizatorami. Wyświetlanie, dodawanie, edycja, usuwanie i test lokalizatorów
+ */
 @Controller
 public class LocatorsController {
 

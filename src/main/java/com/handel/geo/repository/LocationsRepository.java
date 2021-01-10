@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repozytorium lokalizacji
+ */
 @Repository("locationsRepository")
 public interface LocationsRepository extends CrudRepository<Location, Integer>
 {

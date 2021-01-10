@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+/**
+ * Serwis API
+ */
 @Service("apiService")
 public class ApiService {
     

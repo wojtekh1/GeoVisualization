@@ -15,6 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+/**
+ * Kontroler strony głównej
+ */
 @Controller
 public class HomeController {
 

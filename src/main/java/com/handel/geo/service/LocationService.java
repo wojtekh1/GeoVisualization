@@ -17,6 +17,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Serwis lokalizacji
+ */
 @Service("locationService")
 public class LocationService {
 

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Serwis lokalizatorów
+ */
 @Service("locatorService")
 public class LocatorService {
 

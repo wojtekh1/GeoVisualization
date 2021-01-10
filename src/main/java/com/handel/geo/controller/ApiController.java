@@ -15,6 +15,10 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+
+/**
+ * Kontroler API
+ */
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -71,7 +75,7 @@ public class ApiController {
             Location location1 = apiService.postLocation(location);
     //        System.out.println("metoda apiService.postLocation: "+ location1);
             if (location1.getLocator()==null) {
-                return new ResponseEntity<String>("Api key not found",HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<String>("Api key not found",HttpStatus.NOT_FOUND);
             }else if(location1.getDate_time()==null) {
                 return new ResponseEntity<String>("The location can be saved only 24 hours after locating", HttpStatus.BAD_REQUEST);
             }else if(Float.isNaN(location1.getFi())){

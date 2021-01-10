@@ -16,20 +16,23 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "Users")
+/**
+ * Użytkownicy aplikacji
+ */
 public class Users {
-
+    /** Identyfikator */
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "User_Id")
     private Integer userId;
-
+    /** Zakodowane hasło */
     @JsonIgnore
     @Column(name = "Password")
     @Size(min = 5, message = "Hasło musi mieć przynajmniej 5 znaków")
     private String password;
 
-
+    /** E-mail */
     @Column(name = "Email")
     @Email(message = "Wprowadź poprawny adres email")
     @NotEmpty
@@ -42,7 +45,7 @@ public class Users {
     @JsonIgnore
     @Column(name = "Image")
     private String imageLink;
-
+    /** Role użytkownika */
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Users_Role",

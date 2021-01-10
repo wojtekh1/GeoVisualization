@@ -22,25 +22,32 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+/**
+ * Klasa służąca do opisu lokalizacji
+ */
 public class Location {
 
+    /** Identyfikator */
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /** Szerokość geograficzna */
     @NotNull
     private Float fi;
+    /** Długość geograficzna */
     @NotNull
     private Float lambda;
+    /** Wysokość nad poziomem morza */
     @Nullable
     private float h;
-
+    /** Dokładność */
     @Nullable
     private float accuracy;
-
+    /** Data i czas */
     private LocalDateTime date_time;
-
+    /** Lokalizator który pomierzył lokalizację*/
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Locator")
     private Locator locator;

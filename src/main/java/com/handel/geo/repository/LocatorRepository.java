@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Repozytorium lokalizatorów
+ */
 @Repository("locatorRepository")
 public interface LocatorRepository extends CrudRepository<Locator, Integer>
 //        extends JpaRepository<Locator, Integer>

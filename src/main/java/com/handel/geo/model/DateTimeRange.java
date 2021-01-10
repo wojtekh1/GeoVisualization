@@ -3,13 +3,15 @@ package com.handel.geo.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+/**
+ * Klasa służąca do określenia przedziału czasowego
+ */
 public class DateTimeRange {
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    /** Dolny zakres przedziału */
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime from;
+    /** Górny zakres przedziału */
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime to;
 

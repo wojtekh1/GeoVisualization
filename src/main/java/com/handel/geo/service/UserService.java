@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Serwis użytkowników
+ */
 @Service("userService")
 public class UserService {
 

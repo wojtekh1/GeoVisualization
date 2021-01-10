@@ -18,29 +18,31 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Entity
-//@Table(name = "locator")
+/**
+ * Klasa służąca do opisu lokalizatora
+ */
 public class Locator {
-
+    /** Identyfikator */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    /** Klucz API */
     @Generated
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String apiKey;
-
+    /** Krótki opis lokalizatora */
     @JsonIgnore
     @NotEmpty(message = "Wypełnij opis dodatkowy")
     private String description;
-
+    /** Data modyfikacji */
     @JsonIgnore
     private LocalDateTime modyficationDate;
-
+    /** Użykownik do którego należy lokalizator */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "User")
     private Users user;
-
+    /** Nazwa nadajnika */
     @NotEmpty(message = "Wypełnij nazwę nadajnika")
     private String name;
 

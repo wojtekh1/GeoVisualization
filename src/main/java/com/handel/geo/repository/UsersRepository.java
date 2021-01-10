@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repozytorium użytkowników
+ */
 @Repository("usersRepository")
 public interface UsersRepository extends JpaRepository<Users, Integer> {
     Users findByEmail(String email);

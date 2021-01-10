@@ -16,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Kontroler stron logowania oraz rejestracji
+ */
 @Controller
 public class LoginController {
 

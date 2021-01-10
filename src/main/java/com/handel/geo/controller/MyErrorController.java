@@ -24,7 +24,9 @@ import javax.websocket.server.PathParam;
 import java.util.Enumeration;
 import java.util.List;
 
-
+/**
+ * Kontroler stron z błędami
+ */
 @Controller
 public class MyErrorController implements ErrorController {
     @RequestMapping("/error")

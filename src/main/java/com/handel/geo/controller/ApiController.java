@@ -30,11 +30,13 @@ public class ApiController {
     @Autowired
     LocationService locationService;
 
+    /** Metoda get /allLocators */
     @GetMapping("/allLocators")
     public List<Locator> getAllLocators(){
         return apiService.getAllLocators();
     }
 
+    /** Metoda get /allUserLocators */
     @GetMapping("/allUserLocators")
     public Object getAllLocators(@RequestBody String apiKey, HttpServletResponse response){
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -50,6 +52,7 @@ public class ApiController {
         }
     }
 
+    /** Metoda get /locatorLastLocation */
     @GetMapping("/locatorLastLocation")
     public Object getLastLocation(@RequestBody String apiKey){
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -60,6 +63,7 @@ public class ApiController {
         }
     }
 
+    /** Metoda get /postLocation */
     @PostMapping("/postLocation")
     public Object postLocation(@RequestBody Location location){
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();

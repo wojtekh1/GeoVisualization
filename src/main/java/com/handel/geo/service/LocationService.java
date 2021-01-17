@@ -37,46 +37,46 @@ public class LocationService {
     @Autowired
     private LocatorService locatorService;
 
-//    public Locator saveLocation(Locator locator){
-//        return locationsRepository.save(locatoions);
-//    }
-
+    /** Metoda zwracająca listę wszystkich lokalizacje */
     public List<Location> getAllLocations() {
         return new ArrayList<>(locationsRepository.getAllLocations());
     }
+
+    /** Metoda zwracająca listę wszystkich ostatnich lokalizacji lokalizatorów dla użytkownika o podanym ID */
     public List<Location> getLastLocatorLocations(Integer userId) {
         List<String> allUserLocatorsId = locatorRepository.getAllUserLocatorsId(userId);
 //        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
         return new ArrayList<Location>(locationsRepository.getLastLocatorLocations(allUserLocatorsId));
     }
+
+    /** Metoda zwracająca listę wszystkich lokalizacji lokalizatorów dla użytkownika o podanym ID */
     public List<Location> getAllUserLocations(Integer userId) {
         List<String> allUserLocatorsId = locatorRepository.getAllUserLocatorsId(userId);
 //        System.out.println("UserLocationsID wynik:_"+allUserLocatorsId);
         return new ArrayList<Location>(locationsRepository.getLocationsByUser(allUserLocatorsId));
     }
+
+    /** Metoda zwracająca listę wszystkich lokalizacji lokalizatora o podanym ID */
     public List<Location> getLocatorLocations(Long id) {
         return new ArrayList<Location>(locationsRepository.getLocatorLocations(id));
     }
+
+    /** Metoda zwracająca listę wszystkich lokalizacji lokalizatora o podanym ID z podanego zakresu */
     public List<Location> getLocatorLocationsByDate(Long id, DateTimeRange range) {
         return new ArrayList<Location>(locationsRepository.getLocatorLocationsByDate(id,range.getDateTimeFrom(),range.getDateTimeTo()));
     }
+    /** Metoda usuwająca lokalizację o podanym ID */
     public void deleteLocation(Integer id) {
         locationsRepository.deleteLocationById(id);
     }
 
+    /** Metoda usuwająca wszystkie lokalizacje lokalizatora o podanym ID */
     public void deleteAllLocatorLocation(Long id) {
         Locator locator = locatorService.getLocator(id);
         locationsRepository.deleteAllLocatorLocation(locator); 
     }
-    public Location getLocator(Integer id) {
-        return locationsRepository.getLocationById(id);
-    }
 
-    public void updateLocator(Location location) {
-        locationsRepository.save(location);
-    }
-
-
+    /** Metoda ustawiająca zakres */
     public DateTimeRange setRange(String fromDateTime, String toDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
         LocalDateTime fromDate = LocalDateTime.parse(fromDateTime, formatter);
@@ -84,6 +84,8 @@ public class LocationService {
         DateTimeRange range = new DateTimeRange(fromDate,toDate);
         return range;
     }
+
+    /** Metoda zapisaująca lokalizację */
     public Location saveLocation(Location location){
         long between = ChronoUnit.MINUTES.between(LocalDateTime.now(),location.getDate_time());
         System.out.println("odstęp minutowy " + between);
@@ -100,6 +102,8 @@ public class LocationService {
             return locationsRepository.save(location);
         }
     }
+
+    /** Metoda sprawdzająca dostępność użytkownika do lokalizatora */
     public boolean checkAccess(Location location, String authName) {
         Locator locator=locatorService.getLocatorByApiKey(location.getLocator().getApiKey());
         if (locator.getUser().getEmail()==authName){

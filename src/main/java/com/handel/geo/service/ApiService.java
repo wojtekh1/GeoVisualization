@@ -23,19 +23,23 @@ public class ApiService {
     @Autowired
     LocationService locationService;
 
+    /** Metoda zwracająca listę wszystkich lokalizatorów */
     public List<Locator> getAllLocators() {
         return locatorService.getAllLocators();
     }
 
+    /** Metoda zwracająca listę wszystkich lokalizatorów użytkownika dla podanego klucza API*/
     public List<Locator> getAllUserLocatorsByApiKey(String apiKey) {
         return locatorService.getAllUserLocatorsByApiKey(apiKey);
     }
 
+    /** Metoda zwracająca ostatnią lokalizację dla lokalizatora o podanym kluczu API*/
     public Location getLastLocatorLocation(String apiKey) {
         Locator locator = locatorService.getLocatorByApiKey(apiKey);
         return locationService.getLastLocatorLocations(locator.getUser().getUserId()).get(0);
     }
 
+    /** Metoda zapisująca lokalizację */
     public Location postLocation(@RequestBody  Location location) {
         Locator locator=locatorService.getLocatorByApiKey(location.getLocator().getApiKey());
         Location locationNew = new Location(

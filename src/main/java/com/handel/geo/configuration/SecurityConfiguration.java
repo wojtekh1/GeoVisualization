@@ -16,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
+/** Klasa konfiguracyjna */
 @Configuration
 @EnableAutoConfiguration
 @EnableWebSecurity
@@ -34,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
+    /** Metoda konfiguracyjna sposób autentykacji*/
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.
@@ -44,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
+    /** Metoda konfiguracyjna zabezpieczeń połączeń http */
     @Override
     protected void configure(HttpSecurity security) throws Exception {
 

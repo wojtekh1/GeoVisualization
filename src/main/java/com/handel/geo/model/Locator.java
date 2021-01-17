@@ -45,7 +45,7 @@ public class Locator {
     /** Nazwa nadajnika */
     @NotEmpty(message = "Wypełnij nazwę nadajnika")
     private String name;
-
+    /** Konstruktor bezargumentowy */
     public Locator() {
         this.apiKey=UUID.randomUUID().toString();
     }

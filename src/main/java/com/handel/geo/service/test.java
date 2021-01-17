@@ -28,7 +28,7 @@ public class test implements CommandLineRunner {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
+    /** Metoda testowa uruchamiana przy starcie apliakacji */
     @Override
     public void run(String... args) throws Exception {
 //        System.out.println(bCryptPasswordEncoder.encode("a"));

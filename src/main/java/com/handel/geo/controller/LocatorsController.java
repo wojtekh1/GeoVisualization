@@ -28,6 +28,7 @@ public class LocatorsController {
     @Autowired
     LocatorService locatorService;
 
+    /** Metoda get /locators */
     @RequestMapping(value = "/locators", method = RequestMethod.GET)
     public ModelAndView locators() {
         Locator locator = new Locator();
@@ -51,6 +52,7 @@ public class LocatorsController {
         return modelAndView;
     }
 
+    /** Metoda post /locators */
     @RequestMapping(value = "/locators", method = RequestMethod.POST)
     public ModelAndView createLocator(@Valid Locator locator, BindingResult bindingResult, ModelAndView modelAndView) {
         System.out.println("LOKALIZATOR: --> " + locator);
@@ -70,6 +72,7 @@ public class LocatorsController {
         return modelAndView;
     }
 
+    /** Metoda get /delete/{id} */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView deleteLocator(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -84,6 +87,7 @@ public class LocatorsController {
         return modelAndView;
     }
 
+    /** Metoda get /edit/{id} */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editLocator(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -99,6 +103,7 @@ public class LocatorsController {
         return modelAndView;
     }
 
+    /** Metoda post /edit/{id} */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView editLocator(@Valid Locator locator, BindingResult bindingResult, ModelAndView modelAndView) {
         System.out.println("LOKALIZATOR ID z met POST"+locator.getId());
@@ -108,6 +113,7 @@ public class LocatorsController {
         return modelAndView;
     }
 
+    /** Metoda get /test/{id} */
     @RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
     public ModelAndView testLocator(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();

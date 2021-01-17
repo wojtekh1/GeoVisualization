@@ -29,6 +29,8 @@ import java.util.List;
  */
 @Controller
 public class MyErrorController implements ErrorController {
+
+    /** Metoda get /error */
     @RequestMapping("/error")
     public Object handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);

@@ -52,6 +52,7 @@ public class Location {
     @JoinColumn(name = "Locator")
     private Locator locator;
 
+    /** Konstruktor */
     public Location(float fi, float lambda, float h,float accuracy, LocalDateTime date_time,Locator locator) {
         this.fi=fi;
         this.lambda=lambda;

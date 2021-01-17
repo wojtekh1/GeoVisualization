@@ -24,22 +24,26 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
-
+    /** Metoda uzupełniająca role początkowe */
     @EventListener(ApplicationReadyEvent.class)
     public void fillTestData() {
+        //    INSERT INTO ROLE VALUES (1,'ADMIN');
         saveRole(new Role(1,"ADMIN"));
+        //    INSERT INTO ROLE VALUES (2,'USER');
         saveRole(new Role(2,"USER"));
     }
+    /** Metoda pobierająca wszystkie role */
     public List<Role> getAllRoles(){
         return roleRepository.findAllRoles();
     }
+
+    /** Metoda pobierająca role użytkownika */
     public List<Role> getUserRole() {
         return roleRepository.findUserRole();
     }
 
+    /** Metoda szukająca role */
     public Role findRole(String role) {
         return roleRepository.findRole(role);
     }
-//    INSERT INTO ROLE VALUES (1,'ADMIN');
-//    INSERT INTO ROLE VALUES (2,'USER');
 }

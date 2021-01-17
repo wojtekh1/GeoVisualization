@@ -30,38 +30,50 @@ public class LocatorService {
     @Autowired
     private LocationService locationService;
 
+    /** Metoda zapisująca lokalizator */
     public Locator saveLocator(Locator locator){
         return locatorRepository.save(locator);
     }
 
+    /** Metoda zwracająca listę wszystkich lokalizatorów */
     public List<Locator> getAllLocators() {
         return new ArrayList<>(locatorRepository.getAllLocators());
     }
+
+    /** Metoda zwracająca listę wszystkich lokalizatorów użytkownika o podanym ID */
     public List<Locator> getAllUserLocators(Integer userId) {
         return new ArrayList<Locator>(locatorRepository.getAllUserLocators(userId));
     }
 
+    /** Metoda usuwająca lokalizator */
     public void deleteLocator(Long id) {
         System.out.println("ID lokalizatora "+id);
         locationService.deleteAllLocatorLocation(id);
         locatorRepository.deleteLocatorById(id);
     }
 
+    /** Metoda zwracająca lokalizator o podanym ID */
     public Locator getLocator(Long id) {
         return locatorRepository.getLocatorById(id);
     }
 
+    /** Metoda aktualizująca lokalizator */
     public void updateLocator(Locator locator) {
         locatorRepository.save(locator);
     }
 
+    /** Metoda zwracająca listę wszystkich lokalizatorów użytkownika którego jest lokalizator o podanym apiKey */
     public List<Locator> getAllUserLocatorsByApiKey(String apiKey) {
         Users user= locatorRepository.getUserByApiKey(apiKey);
         return new ArrayList<Locator>(locatorRepository.getAllUserLocators(user.getUserId()));
     }
+
+    /** Metoda zwracająca lokalizator podanym apiKey */
     public Locator getLocatorByApiKey(String apiKey) {
         return locatorRepository.getLocatorById(locatorRepository.getLocatorIdByApiKey(apiKey));
     }
+
+    /** Metoda sprawdzająca dostępność użytkownika do lokalizatora o podanym apiKey */
     public boolean checkAccess(String apiKey, String authName) {
         Locator locator=locatorService.getLocatorByApiKey(apiKey);
         if (locator.getUser().getEmail()==authName){

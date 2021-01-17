@@ -27,12 +27,14 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
+    /** Metoda get /login */
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
+    /** Metoda get /registration */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration(ModelAndView modelAndView) {
         Users user =new Users();
@@ -56,6 +58,8 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
+
+    /** Metoda post /registration */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid Users user, BindingResult bindingResult, ModelAndView modelAndView) {
         System.out.println(user);

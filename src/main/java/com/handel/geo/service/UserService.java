@@ -32,10 +32,12 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /** Metoda szukająca użytkownika po polu email */
     public Users findUserByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
 
+    /** Metoda szukająca ID użytkownika po polu email */
     public Integer findUserIdByEmail(String email) {
         Users user = new Users();
         user=usersRepository.findByEmail(email);
@@ -50,36 +52,33 @@ public class UserService {
         return id;
     }
 
-    public List<Role> findAllTypes() {
-        return roleRepository.findAllRoles();
-    }
-
+    /** Metoda zapisująca nowego użytkownika */
     public Users saveNewUser(Users user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setIsActive(1);
-
         return usersRepository.save(user);
     }
 
+    /** Metoda aktualizująca użytkownika */
     public Users updateUser(Users user){
         return usersRepository.save(user);
     }
 
-
-    public List<Users> findUserByRoles(Role role) {
+    /** Metoda zwracająca listę użytkowników zpodaną rolą */
+    public List<Users> getUserByRoles(Role role) {
         return usersRepository.findUserByRoles(role);
-
     }
 
-
+    /** Metoda zwracająca listę wszystkich użytkowników */
     public List<Users> findAll() {
         return usersRepository.findAll();
-
     }
 
-    public Users findUsersByUserId(Integer id) {
+    /** Metoda zwracająca użytkowników o podanym ID */
+    public Users getUsersById(Integer id) {
         return usersRepository.findUsersByUserId(id);
     }
+
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillTestData() {

@@ -32,6 +32,7 @@ public class LocationsController {
     @Autowired
     LocationService locationService;
 
+    /** Metoda get /location/{id} */
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
     public ModelAndView showLocator(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -64,6 +65,8 @@ public class LocationsController {
         };
         return modelAndView;
     }
+
+    /** Metoda get /location/{id}/{from}/{to} */
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
     @RequestMapping(value = "/location/{id}/{from}/{to}", method = RequestMethod.GET)
     public ModelAndView showLocatorBetween(@PathVariable("id") Long id, @PathVariable("from") String fromDateTime, @PathVariable("to") String toDateTime) {

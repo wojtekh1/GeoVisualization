@@ -28,6 +28,7 @@ public class HomeController {
     @Autowired
     LocationService locationService;
 
+    /** Metoda get strony głównej */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home() {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
